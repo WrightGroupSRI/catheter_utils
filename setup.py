@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup
 
 with open("requirements.txt") as req_file:
     requirements = req_file.read().splitlines()
@@ -6,6 +6,6 @@ with open("requirements.txt") as req_file:
 setup(
     name="catheter_utils",
     version="0.1.0",
-    packages=find_packages(),
+    packages=["catheter_utils"],
     install_requires=requirements,
 )
