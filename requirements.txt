@@ -1,3 +1,0 @@
-# requirements of catheter_utils
-numpy
-pandas
