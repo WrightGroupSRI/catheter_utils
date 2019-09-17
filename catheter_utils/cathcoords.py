@@ -1,14 +1,18 @@
 """Manipulate cathcoords files."""
 
 import glob
+import logging
 import numpy
 import pandas
 import re
-from collections import defaultdict
+from collections import defaultdict, namedtuple
+
+logger = logging.getLogger(__name__)
 
 
-def discover_cathcoords_files(dirname):
-    """WHAT DOES IT DO"""
+def discover_files(dirname):
+    """Search the given directory for cathcoords files."""
+
     filenames = glob.glob(dirname + "/*coil*.txt")
     regex = re.compile(r"-coil(\d+)-(\d{4}).txt")
 
@@ -17,51 +21,116 @@ def discover_cathcoords_files(dirname):
         assert match is not None, "no match in regex"
         return int(match.group(1)), int(match.group(2))
 
-    byid = defaultdict(dict)
+    dir_info = defaultdict(dict)
     for filename in filenames:
         coil, id = extract_coil_and_id(filename)
-        byid[id][coil] = filename
+        dir_info[id][coil] = filename
 
-    return byid
+    return dir_info
 
 
-def read_cathcoords_data(dist_filename, prox_filename):
-    """WHAT DOES IT DO"""
+Cathcoords = namedtuple("Cathcoords", "coords snr times trigs resps")
+"""Object representing all the data that goes into a cathcoords file."""
 
-    def _read_file(filename):
-        with open(filename, "r") as f:
-            names = ["X", "Y", "Z", "dunno", "Timestamp", "Trig", "Resp"]
-            return pandas.read_csv(f, sep="\\s+", header=None, names=names)
+_NAMES = ["X", "Y", "Z", "SNR", "Timestamp", "Trig", "Resp"]
+"""Column names for pandas.DataFrames."""
+
+
+def _read_file_df(filename):
+    """Get a pandas dataframe for a cathcoords file."""
+    logger.debug("Reading cathcoords file %s", filename)
+    with open(filename, "r") as f:
+        return pandas.read_csv(f, sep="\\s+", header=None, names=_NAMES)
+
+
+def _write_file_df(filename, df):
+    """Write dataframe into a CSV."""
+    logger.debug("Writing cathcoords file %s", filename)
+    with open(filename, "w") as f:
+        df.to_csv(f, sep=" ", header=False, index=False, float_format="%.4f")
+
+
+def read_file(filename):
+    """Extract data from a cathcoords file."""
+
+    df = _read_file_df(filename)
+
+    # Extract desired data
+    coords = df[["X", "Y", "Z"]].values
+    dunno = df["SNR"].values
+    times = df["Timestamp"].values
+    trigs = df["Trig"].values
+    resps = df["Resp"].values
+
+    return Cathcoords(coords, snr, times, trigs, resps)
+
+
+def read_pair(dist_filename, prox_filename):
+    """Extract data from a pair of cathcoords files and do simple checks for
+    consistency.
+    
+    Different coil files may have a different number of rows for the same
+    recording. This will match rows using timestamps so that coords, snr, etc
+    are paired up correctly.
+    """
+
+    logger.debug("Reading cathcoords pair.")
 
     # Read in the files
-    dist_df = _read_file(dist_filename)
-    prox_df = _read_file(prox_filename)
+    dist_df = _read_file_df(dist_filename)
+    prox_df = _read_file_df(prox_filename)
 
-    # Only use points acquired at the same time
+    # Only use points acquired at the same time, sometimes different coils
+    # have a slightly different amount of data.
     join_df = pandas.merge(
         dist_df, prox_df, on="Timestamp", suffixes=("_dist", "_prox")
     )
 
-    # Sanity check some data
+    # Sanity check columns that should match.
     for key in ["Trig", "Resp"]:
         if not join_df[key + "_prox"].equals(join_df[key + "_dist"]):
             count = numpy.sum(
                 join_df[key + "_prox"].values - join_df[key + "_dist"].values != 0
             )
-            print(
-                'Missmatch in "{}":\n  prox: {}\n  dist: {}\n  {} row(s) are not equal.'.format(
-                    key, prox_filename, dist_filename, count
-                )
+            logger.warn(
+                'Missmatch in "%s": %s row(s) are not equal. Prox: "%s" Dist: "%s".',
+                key,
+                count,
+                prox_filename,
+                dist_filename,
             )
 
     # Extract desired data
     dist_coords = join_df[["X_dist", "Y_dist", "Z_dist"]].values
     prox_coords = join_df[["X_prox", "Y_prox", "Z_prox"]].values
+    dist_snr = join_df["SNR_dist"].values
+    prox_snr = join_df["SNR_prox"].values
+    times = join_df["Timestamp"].values
     trigs = join_df["Trig_dist"].values
     resps = join_df["Resp_dist"].values
 
-    # probably would make more sense to just return timestamps ...
-    dts = 0.001 * join_df.diff()["Timestamp"].values
-    dts[0] = 0
+    dist = Cathcoords(dist_coords, dist_snr, times, trigs, resps)
+    prox = Cathcoords(prox_coords, prox_snr, times, trigs, resps)
+    return dist, prox
 
-    return dist_coords, prox_coords, dts, trigs, resps
+
+def write_file(filename, obj):
+    """Write catheter coil data to the specified file."""
+    df = pandas.DataFrame(
+        {
+            "X": obj.coords[:, 0],
+            "Y": obj.coords[:, 1],
+            "Z": obj.coords[:, 2],
+            "SNR": obj.snr,
+            "Timestamp": obj.times,
+            "Trig": obj.trigs,
+            "Resp": obj.resps,
+        },
+        columns=_NAMES,
+    )
+    _write_file_df(filename, df)
+
+
+def make_filename(index, coil):
+    """Format a cathcoords filename."""
+    return "cathcoords-coil{}-{:04d}.txt".format(coil, index)
