@@ -16,7 +16,7 @@ class DiscoverCathcoordsFilesTest(TestCase):
             "/someroot/somenotroot/cathcoords-coil1-0000.txt",
         ]
         mock_glob.return_value = names
-        res = cathcoords.discover_cathcoords_files("somewhere")
+        res = cathcoords.discover_files("somewhere")
         self.assertDictEqual(res, {0: {0: names[0], 1: names[1]}})
 
 
@@ -32,11 +32,9 @@ class ReadCathcoordsDataTest(TestCase):
 
     @patch("builtins.open", mock_open(read_data=DATA))
     def test_read_cathcoords_data(self):
-        dist_coords, prox_coords, dts, trigs, resps = cathcoords.read_cathcoords_data(
-            "dist_filename", "prox_filename"
-        )
+        dist, prox = cathcoords.read_pair("dist_filename", "prox_filename")
 
-        numpy.testing.assert_array_equal(dist_coords, prox_coords)
-        numpy.testing.assert_array_equal(dts, numpy.array([0, 1, 1, 1]))
-        numpy.testing.assert_array_equal(trigs, numpy.array([450, 450, 450, 450]))
-        numpy.testing.assert_array_equal(resps, numpy.array([1000, 1000, 1000, 1000]))
+        numpy.testing.assert_array_equal(dist.coords, prox.coords)
+        numpy.testing.assert_array_equal(dist.times, numpy.array([1000, 2000, 3000, 4000]))
+        numpy.testing.assert_array_equal(dist.trigs, numpy.array([450, 450, 450, 450]))
+        numpy.testing.assert_array_equal(dist.resps, numpy.array([1000, 1000, 1000, 1000]))
