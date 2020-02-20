@@ -57,7 +57,7 @@ def read_file(filename):
 
     # Extract desired data
     coords = df[["X", "Y", "Z"]].values
-    dunno = df["SNR"].values
+    snr = df["SNR"].values
     times = df["Timestamp"].values
     trigs = df["Trig"].values
     resps = df["Resp"].values
