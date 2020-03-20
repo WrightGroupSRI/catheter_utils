@@ -1,309 +1,196 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-""" Read and plot catheter raw data from RthReconImageExporter
+"""This module contains things related to reading and manipulating projections."""
 
-    Reads a single raw data file exported from RTHawk. This is assumed to be a catheter
-    projection file. The first projection is plotted and subsequent projections can
-    be selected for plotting.
-
-    Plots in png format and/or coordinates & physiology data in text format can be output instead using
-    the "-p" and "-c" options. Basic stats on the coordinates and peaks can be output using the "-f"
-    option.
-
-    Note that respiratory data from RTHawk is scaled by 10^5 to give an integer (the respiratory information
-    from RTHawk is a float between 0 and 1).
-
-    Run readRthRaw without any arguments for details on each option.
-
-    Usage examples:
-        > ./readRthRaw.py data/file-0000.projections
-        - This will display the projections in a window
-
-        > ./readRthRaw.py data/file-0000.projections -p
-        - This will save the projections to PNG files
-        
-        > ./readRthRaw.py data/file-0000.projections -c
-        - This will save the peak coordinates to txt files
-
-"""
-
-import os
+import collections
+import logging
+import numpy
+import pandas
 import struct
-import sys
 import scipy
 import scipy.fftpack
-import numpy as np
 
-float_bytes = 8  # These are being written on a 64-bit system
-
-
-class RawReader:
-    def __init__(self, fname="", float_bytes=8, legacy_version=0):
-        self.rawFile = fname
-        self.legacy = legacy_version
-        self.float_bytes = float_bytes
-        self.setup()
-
-    def setup(self):
-        self.projections = []  # array of tuples, where each tuple is a series of complex floats
-        self.projComplex = []
-        self.triggerTimes = []  # array of trigger times, one triggerTime per each triplet of projections
-        self.respPhases = []
-        self.timestamps = []
-        self.pg = []
-        self.ecg1 = []
-        self.ecg2 = []
-        self.projNum = 0
-        self.projSize = 0
-        self.fts = []
-        self.projRaw = []  # This will be the same as projComplex but with the x, y and z projections each in their own row
-        self.xsize = 0
-        self.ysize = 0
-        self.zsize = 0
-        self.fieldOfView = 0
-        self.version = 0
-
-    def readProjectionSizes(self, fp):
-        hdr = fp.read(12)  # 3 32-bit ints
-        if not hdr:
-            print("reached EOF")
-            return (0, 0, 0, False)
-        else:
-            xsize = struct.unpack('>i', hdr[0:4])[0]
-            ysize = struct.unpack('>i', hdr[4:8])[0]
-            zsize = struct.unpack('>i', hdr[8:12])[0]
-            return (xsize, ysize, zsize, True)
-
-    def readFloat64(self, fp):
-        hdr = fp.read(8)
-        if not hdr:
-            print("reached EOF")
-            return (-1, False)
-        else:
-            return (struct.unpack('>d', hdr[0:8])[0], True)
-
-    def readFOV(self, fp):
-        return self.readFloat64(fp)
-
-    def readInt64(self, fp):
-        hdr = fp.read(8)
-        if not hdr:
-            print("reached EOF")
-            return (-1, False)
-        else:
-            return (struct.unpack('>q', hdr[0:8])[0], True)
-
-    def readTimestamp(self, fp):
-        return self.readInt64(fp)
-
-    def readTrig(self, fp):
-        return self.readFloat64(fp)
-
-    def readResp(self, fp):
-        return self.readFloat64(fp)
-
-    def readTrace(self, fp):
-        return self.readFloat64(fp)
-
-    def readV1Header(self, fp):
-        (xsize, ysize, zsize, ok) = self.readProjectionSizes(fp)
-        NULL_TUPLE = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
-        fov, ok = self.readFOV(fp)
-        timestamp, ok = self.readTimestamp(fp)
-        trig, ok = self.readTrig(fp)
-        resp, ok = self.readResp(fp)
-        pg, ok = self.readTrace(fp)
-        ecg1, ok = self.readTrace(fp)
-        ecg2, ok = self.readTrace(fp)
-        if not ok:
-            return NULL_TUPLE
-        return (xsize, ysize, zsize, fov, trig, resp, timestamp, pg, ecg1, ecg2)
-
-    def readLegacy3Header(self, fp):
-        (xsize, ysize, zsize, ok) = self.readProjectionSizes(fp)
-        NULL_TUPLE = (0, 0, 0, 0, 0, 0, 0)
-        fov, ok = self.readFOV(fp)
-        timestamp, ok = self.readTimestamp(fp)
-        trig, ok = self.readTrig(fp)
-        resp, ok = self.readResp(fp)
-        if not ok:
-            return NULL_TUPLE
-        return (xsize, ysize, zsize, fov, trig, resp, timestamp)
-
-    def readLegacy2Header(self, fp):
-        (xsize, ysize, zsize, ok) = self.readProjectionSizes(fp)
-        NULL_TUPLE = (0, 0, 0, 0, 0, 0)
-        fov, ok = self.readFOV(fp)
-        trig, ok = self.readTrig(fp)
-        resp, ok = self.readResp(fp)
-        if not ok:
-            return NULL_TUPLE
-        else:
-            return (xsize, ysize, zsize, fov, trig, resp)
-
-    def readLegacyHeader(self, fp):
-        (xsize, ysize, zsize, ok) = self.readProjectionSizes(fp)
-        NULL_TUPLE = (0, 0, 0, 0)
-        fov, ok = self.readFOV(fp)
-        if not ok:
-            return NULL_TUPLE
-        else:
-            return (xsize, ysize, zsize, fov)
-
-    def checkFileHeader(self, fp):
-        hdrBytes = fp.peek(8)
-        fmt = b''.join(struct.unpack('4c', hdrBytes[0:4]))
-        fmt = fmt.decode('ascii')
-        version = struct.unpack('>i', hdrBytes[4:8])[0]
-        if (fmt != "CTHX" or version <= 0):
-            return False  # legacy format
-        else:
-            self.version = version
-            self.legacy = 0
-            fp.read(8)  # Digest the header bytes
-            return True
-
-    def readFile(self, rawFile=""):
-        if not rawFile:
-            rawFile = self.rawFile
-        self.setup()
-        fp = open(rawFile, "rb")
-        if self.checkFileHeader(fp):
-            print('Cath raw file version: ' + str(self.version))
-        elif not self.legacy:
-            self.legacy = 3  # Assume most recent legacy format
-            print('Detected legacy format, assuming version ' + str(self.legacy))
-        done = False
-        first = True
-        while not done:
-            xs = ys = zs = fov = 0
-            if self.legacy == 1:
-                xs, ys, zs, fov = self.readLegacyHeader(fp)
-            elif self.legacy == 2:
-                xs, ys, zs, fov, trig, resp = self.readLegacy2Header(fp)
-                self.triggerTimes.append(trig)
-                self.respPhases.append(resp)
-            elif self.legacy == 3:
-                xs, ys, zs, fov, trig, resp, timestamp = self.readLegacy3Header(fp)
-                self.triggerTimes.append(trig)
-                self.respPhases.append(resp)
-                self.timestamps.append(timestamp)
-            elif self.legacy == 0 and self.version == 1:
-                xs, ys, zs, fov, trig, resp, timestamp, pg, ecg1, ecg2 = self.readV1Header(fp)
-                self.triggerTimes.append(trig)
-                self.respPhases.append(resp)
-                self.timestamps.append(timestamp)
-                self.pg.append(pg)
-                self.ecg1.append(ecg1)
-                self.ecg2.append(ecg2)
-            else:
-                print('Unknown format, version=' + str(self.version) + ', legacy=' + str(self.legacy))
-                return
-            if (xs == 0 or ys == 0 or zs == 0):
-                done = True;
-                break
-            if first:
-                self.xsize = xs
-                self.ysize = ys
-                self.zsize = zs
-                self.fieldOfView = fov
-            projSize = xs * ys * zs * 2
-            projByteSize = projSize * float_bytes
-            proj = fp.read(projByteSize)
-            if proj is None or len(proj) < projByteSize:
-                print("Could not read projection " + str(self.projNum) + " stopping here.")
-                break
-            self.projections.append(struct.unpack('>' + str(projSize) + 'd', proj[0:projByteSize]))
-            self.projNum += 1
-        print("Read " + str(self.projNum) + " projections...", end='')
-        print("x size = " + str(self.xsize) + ", ysize = " + str(self.ysize)
-              + " zsize = " + str(self.zsize) + " fov = " + str(self.fieldOfView))
-        # NOTE: each projection in projComplex and projections contains the x, y and z projections
-        for proj in range(0, self.projNum):
-            self.projComplex.append([])
-            for i in range(0, projSize, 2):
-                self.projComplex[proj].append(complex(self.projections[proj][i], self.projections[proj][i + 1]))
-
-        print("Num projections " + str(len(self.projComplex)))
-        for projection in self.projComplex:
-            # split into 'ysize' (3) projections
-            for y in range(1, self.ysize + 1):
-                axis = projection[self.xsize * (y - 1):self.xsize * y]
-                inverseft = scipy.fftpack.ifft(axis)  # ,npts)
-                self.fts.append(scipy.fftpack.fftshift(inverseft))
-                self.projRaw.append(axis)
-        print("Num ffts " + str(len(self.fts)))
+logger = logging.getLogger(__name__)
 
 
-def getStats(valueList, valueNames):
-    """Return stats of given list of sublists, for each index in the sublists
+def reconstruct(raw):
+    """Reconstruct the raw signals into 'projections'.
+    These are 1D magnitude images."""
+    return numpy.abs(reconstruct_complex(raw))
 
-     - Sublists must be of the same length
-     - valueNames must be of the same length as sublists
-    Example:
-    valueList: [ [100,40,20], [110,42,18] ] # [[snr_x, snr_y, snr_z], [snr_x, snr_y, snr_z]]
-    valueNames: ["snr_x", "snr_y", "snr_y"]
+
+def reconstruct_complex(raw):
+    """Reconstruct the raw signals into 'complex projections'.
+    These are the (inverse) FT of the raw signals."""
+    images = scipy.fftpack.ifft(raw, axis=1)
+    images = scipy.fftpack.fftshift(images, axes=1)
+    return images
+
+
+ReadRawResult = collections.namedtuple(
+    "ReadRawResult",
+    "meta raw legacy_version corrupt")
+
+
+def read_raw(filename, legacy_version=None, allow_corrupt=False):
+    """Read the raw projection data from the requested file.
+
+    If `legacy_version` is None then this will try to infer the correct version.
+    Otherwise it will read the file using the requested version number.
+
+    If `allow_corrupt` is true then this won't raise an exception when
+    encountering an apparently corrupt file, and will instead log a
+    warning and return as much data as could be read.
+
+    Returns ReadRawResult(meta, raw, version, corrupt) where:
+        'meta' is a pandas DataFrame containing information about each sample;
+        'raw' is a list of 2D complex valued numpy arrays with readouts in rows;
+        'version' is the inferred or requested legacy_version; and
+        'corrupt' indicates an apparently corrupt file.
     """
-    means = np.mean(valueList, 0)
-    mins = np.amin(valueList, 0)
-    maxs = np.amax(valueList, 0)
-    stds = np.std(valueList, 0)
-    statString = ''
-    for idx, name in enumerate(valueNames):
-        statString += "{0} Mean: {1:.2f} StdDev: {2:.2f} Min: {3:.2f} Max: {4:.2f}\n".format(
-            name, means[idx], stds[idx], mins[idx], maxs[idx])
-    return statString
+    logger.debug("read_raw('%s', legacy_version=%s)", filename, legacy_version)
+
+    with open(filename, "rb") as fp:
+        if legacy_version is not None:
+            return _read_legacy_version(fp, legacy_version, allow_corrupt)
+
+        else:
+            for version in [0, 3, 2, 1]:
+                try:
+                    return _read_legacy_version(fp, version, allow_corrupt)
+                except (ProjectionFileVersionCheck, ProjectionFileCorrupted):
+                    fp.seek(0)
+
+    raise ProjectionFileVersionCheck("unable to infer legacy_version")
 
 
-def getPeaks(rdr):
-    """Return peak coordinates, SNRs, and amplitudes from all the projections read into RawReader"""
-    allSnrs = []
-    allCoords = []
-    allPkAmps = []
-    numProj = len(rdr.projComplex)
-    for i in range(numProj):
-        snr_proj = []
-        coord_proj = []
-        pkAmp_proj = []
-        for j in range(0, rdr.ysize):
-            mag = np.abs(rdr.fts[i * rdr.ysize + j])
-            (peakInd, snr, peak) = getPeakInfo(mag)
-            pkCoord = getCoord(peakInd, rdr.xsize, rdr.fieldOfView)
-            snr_proj.append(snr)
-            coord_proj.append(pkCoord)
-            pkAmp_proj.append(peak)
-        allSnrs.append(snr_proj)
-        allCoords.append(coord_proj)
-        allPkAmps.append(pkAmp_proj)
-    return (allCoords, allSnrs, allPkAmps)
+def _read_legacy_version(fp, version, allow_corrupt):
+    if version == 0:
+        _check_file_header(fp)
+
+    meta = []
+    raw = []
+    corrupt = False
+
+    try:
+        read_header = _READER_FOR_LEGACY[version]
+        while True:
+            head = read_header(fp)
+            body = _read_body(head.xsize, head.ysize, fp)
+
+            meta.append(head._asdict())
+            raw.append(body)
+
+    except ProjectionFileCorrupted:
+        if allow_corrupt:
+            logger.warning("file appears to be corrupt")
+            corrupt = True
+        else:
+            raise
+
+    except _FileEnd:
+        pass
+
+    meta = pandas.DataFrame(meta)
+
+    # These should only change if the sequence changes which would disrupt
+    # recording. That means this is probably a decent way of sanity checking
+    # the file's version.
+    if (meta["xsize"].nunique() != 1 or
+            meta["ysize"].nunique() != 1 or
+            meta["zsize"].unique() != [1]):
+        raise ProjectionFileVersionCheck("file version appears to be incorrect")
+
+    meta.drop(columns=["xsize", "ysize", "zsize"], inplace=True)
+    return ReadRawResult(meta, raw, version, corrupt)
 
 
-def getSNR(projection, peak, window_size=40):
-    leftMean = scipy.mean(projection[:window_size])
-    rightMean = scipy.mean(projection[len(projection) - window_size:])
-    stdev = 0
-    if leftMean > rightMean:
-        stdev = scipy.std(projection[len(projection) - window_size:])
-    else:
-        stdev = scipy.std(projection[:window_size])
-    if stdev == 0:
-        return 0
-    return (peak * 1.0) / stdev
+class _FileEnd(Exception):  # appropriate base? do we even care?
+    """Raised to indicate file reading is complete."""
 
 
-def getPeakInfo(projMag):
-    """ Get index of peak, SNR, and amplitude of peak from a magnitude projection"""
-    peakAmp = max(projMag)
-    peakInd = list(projMag).index(peakAmp)
-    snr = getSNR(projMag, peakAmp)
-    return (peakInd, snr, peakAmp)
+class ProjectionFileCorrupted(ValueError):
+    """Raised to indicate that the file is 'corrupt'."""
 
 
-def getCoord(index, xsize, fov):
-    """Return the coordinate for the index in mm
-    index - desired index in projection
-    xsize - length of projection (number of samples / readout length)
-    fov - field of view in mm
-    """
-    xres = fov / xsize
-    return (xres * (index - (xsize / 2)))
+class ProjectionFileVersionCheck(ValueError):
+    """Raised to indicate that the file failed its version check."""
+
+
+def _read(fp, count):
+    """Read data from fp. Make sure we have the right amount of data."""
+    h = fp.read(count)
+    if len(h) == 0:
+        raise _FileEnd()
+    if len(h) < count:
+        raise ProjectionFileCorrupted("expected {} bytes but received {}".format(count, len(h)))
+    return h
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# Sample headers contain info on the size of the readout, the number of
+# readouts, and the physiological signals recorded during the readout.
+
+
+# Most fields are "d" for double.
+_FIELD_KINDS = collections.defaultdict(lambda: "d")
+_FIELD_KINDS.update({"xsize": "i", "ysize": "i", "zsize": "i", "timestamp": "q"})
+
+
+def _make_header_reader(name, fields):
+    """Headers all contain similar data and can be read in *almost* the same way."""
+    kind = collections.namedtuple(name, fields)
+    fmt = ">" + "".join(_FIELD_KINDS[k] for k in fields)
+    size = struct.calcsize(fmt)
+
+    def reader(fp):
+        return kind(*struct.unpack(fmt, _read(fp, size)))
+
+    return reader
+
+
+_read_legacy_v1_header = _make_header_reader(
+    "_LEGACY_V1_HEADER",
+    ["xsize", "ysize", "zsize", "fov"]
+)
+
+_read_legacy_v2_header = _make_header_reader(
+    "_LEGACY_V2_HEADER",
+    ["xsize", "ysize", "zsize", "fov", "trig", "resp"]
+)
+
+_read_legacy_v3_header = _make_header_reader(
+    "_LEGACY_V3_HEADER",
+    ["xsize", "ysize", "zsize", "fov", "timestamp", "trig", "resp"]
+)
+
+_read_header = _make_header_reader(
+    "_HEADER",
+    ["xsize", "ysize", "zsize", "fov", "timestamp", "trig", "resp", "pg", "ecg1", "ecg2"]
+)
+
+_READER_FOR_LEGACY = {
+    1: _read_legacy_v1_header,
+    2: _read_legacy_v2_header,
+    3: _read_legacy_v3_header,
+    0: _read_header,
+}
+
+
+def _read_body(pixel_count, readout_count, fp):
+    value_count = pixel_count*readout_count  # complex values
+    byte_count = 8*2*pixel_count*readout_count  # 8 bytes per real, 2 real per complex
+    body = numpy.frombuffer(_read(fp, byte_count), dtype=numpy.complex128, count=value_count)
+    body = body.newbyteorder(">")
+    body = body.reshape((readout_count, pixel_count))
+    return body.astype(numpy.complex128)
+
+
+def _check_file_header(fp):
+    # Check the header for legacy == 0 files.
+    header_bytes = fp.peek(8)
+    fmt = b''.join(struct.unpack('4c', header_bytes[0:4]))
+    fmt = fmt.decode('ascii')
+    version = struct.unpack('>i', header_bytes[4:8])[0]
+    if fmt != "CTHX" or version != 1:
+        raise ProjectionFileVersionCheck("unknown version ({}, {})".format(fmt, version))
+    fp.read(8)  # Digest the header bytes
+
