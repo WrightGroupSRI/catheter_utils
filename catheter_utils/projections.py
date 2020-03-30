@@ -1,10 +1,14 @@
 """This module contains things related to reading and manipulating projections."""
 
 import collections
+import glob
 import logging
+import os
+import re
+import struct
+
 import numpy
 import pandas
-import struct
 import scipy
 import scipy.fftpack
 
@@ -25,6 +29,105 @@ def reconstruct_complex(raw):
     return images
 
 
+def discover_raw(path, validate=False):
+    """Check for possible projections files in the given directory, and
+    summarize their contents.
+
+    Returns a pandas.DataFrame where rows describe individual projections and
+    columns are given by:
+        scheme: str     # how projections are related,
+        recording: int  # the recording number,
+        coil: int       # the coil that the projection was acquired on,
+        axis: int       # the axis of the projection,
+        dither: int     # the dither index (0 for sri),
+        filename: str   # the file that the projection is in,
+        index: int      # the index of the projection in the file
+
+    If `validate` is set to True then there will be additional columns:
+        corrupt: bool   # is the file corrupt
+        expected: bool  # projections in the file agree with expectation
+        version: int    # the inferred file version
+    """
+
+    # Data that we have discovered. Will become rows in a table.
+    discoveries = []
+    for name in sorted(glob.glob(os.path.join(path, "*.projections"))):
+        discovery = guess_contents_raw(name)
+        if discovery is not None:
+            discoveries.extend(discovery)
+
+    if validate:
+        expectation_for_scheme = {"sri": 3, "hadamard": 1}
+        cache = {}
+        for discovery in discoveries:
+            filename = discovery["filename"]
+            try:
+                c, n, v = cache[filename]
+            except KeyError:
+                _, ps, v, c = read_raw(filename, allow_corrupt=True)
+                n = len(ps[0])
+                cache[filename] = c, n, v
+
+            discovery.update(
+                corrupt=c,
+                version=v,
+                expected=(n == expectation_for_scheme[discovery["scheme"]])
+            )
+
+    discoveries = pandas.DataFrame(discoveries)
+
+    # TODO
+    #   check that all the required rows are there? E.g., FH requires 4
+    #   projections per coil and these come from different files.
+
+    return discoveries
+
+
+_RAW_SRI_RE = re.compile(r"cathcoil(?P<coil>\d+)-(?P<recording>\d+).projections")
+_RAW_FE_RE = re.compile(r"cathHVC(?P<coil>\d+)P(?P<axis>\d+)D(?P<dither>\d+)-(?P<recording>\d+).projections")
+_ProjectionInfo = collections.namedtuple(
+        "_ProjectionInfo",
+        ["scheme", "recording", "coil", "axis", "dither", "filename", "index"])
+
+
+def guess_contents_raw(filename):
+    """Guess the projection content of a raw projections file with the given
+    filename. The guess is based on convention.
+
+    Returns a list of dicts providing info about what each projection is. """
+
+    def unpack(m, fields):
+        return {x: int(m.group(x)) for x in fields}
+
+    match = _RAW_SRI_RE.search(filename)
+    if match:
+        matched_fields = unpack(match, ["coil", "recording"])
+        return [
+            _ProjectionInfo(
+                scheme="sri",
+                axis=i,
+                dither=0,
+                filename=filename,
+                index=i,
+                **matched_fields
+            )._asdict() for i in range(3)
+        ]
+
+    match = _RAW_FE_RE.search(filename)
+    if match:
+        matched_fields = unpack(match, ["coil", "axis", "dither", "recording"])
+        return [
+            _ProjectionInfo(
+                scheme="hadamard",
+                filename=filename,
+                index=0,
+                **matched_fields
+            )._asdict()
+        ]
+
+    return None
+
+
 ReadRawResult = collections.namedtuple(
     "ReadRawResult",
     "meta raw legacy_version corrupt")
@@ -36,12 +139,12 @@ def read_raw(filename, legacy_version=None, allow_corrupt=False):
     If `legacy_version` is None then this will try to infer the correct version.
     Otherwise it will read the file using the requested version number.
 
-    If `allow_corrupt` is true then this won't raise an exception when
+    If `allow_corrupt` is True then this won't raise an exception when
     encountering an apparently corrupt file, and will instead log a
     warning and return as much data as could be read.
 
     Returns ReadRawResult(meta, raw, version, corrupt) where:
-        'meta' is a pandas DataFrame containing information about each sample;
+        'meta' is a pandas.DataFrame containing information about each sample;
         'raw' is a list of 2D complex valued numpy arrays with readouts in rows;
         'version' is the inferred or requested legacy_version; and
         'corrupt' indicates an apparently corrupt file.
@@ -194,3 +297,6 @@ def _check_file_header(fp):
         raise ProjectionFileVersionCheck("unknown version ({}, {})".format(fmt, version))
     fp.read(8)  # Digest the header bytes
 
+
+# end of read_raw details
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
