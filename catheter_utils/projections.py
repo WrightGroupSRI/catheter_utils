@@ -33,28 +33,34 @@ def discover_raw(path, validate=False):
     """Check for possible projections files in the given directory, and
     summarize their contents.
 
-    Returns a pandas.DataFrame where rows describe individual projections and
-    columns are given by:
-        scheme: str     # how projections are related,
-        recording: int  # the recording number,
-        coil: int       # the coil that the projection was acquired on,
-        axis: int       # the axis of the projection,
-        dither: int     # the dither index (0 for sri),
-        filename: str   # the file that the projection is in,
-        index: int      # the index of the projection in the file
+    Returns (discoveries, unknown) where:
+    `discoveries` is a pandas.DataFrame where rows describe individual
+        projections and columns are given by:
+            scheme: str     # how projections are related,
+            recording: int  # the recording number,
+            coil: int       # the coil that the projection was acquired on,
+            axis: int       # the axis of the projection,
+            dither: int     # the dither index (0 for sri),
+            filename: str   # the file that the projection is in,
+            index: int      # the index of the projection in the file
+        If `validate` is set to True then there will be additional columns:
+            corrupt: bool   # is the file corrupt
+            expected: bool  # projections in the file agree with expectation
+            version: int    # the inferred file version
 
-    If `validate` is set to True then there will be additional columns:
-        corrupt: bool   # is the file corrupt
-        expected: bool  # projections in the file agree with expectation
-        version: int    # the inferred file version
+    `unknown` is a list of ".projections" filenames that do not follow our
+        file naming conventions. What do they contain? Ask somebody else.
     """
 
     # Data that we have discovered. Will become rows in a table.
     discoveries = []
+    unknown = []
     for name in sorted(glob.glob(os.path.join(path, "*.projections"))):
         discovery = guess_contents_raw(name)
         if discovery is not None:
             discoveries.extend(discovery)
+        else:
+            unknown.append(name)
 
     if validate:
         expectation_for_scheme = {"sri": 3, "hadamard": 1}
@@ -80,7 +86,7 @@ def discover_raw(path, validate=False):
     #   check that all the required rows are there? E.g., FH requires 4
     #   projections per coil and these come from different files.
 
-    return discoveries
+    return discoveries, unknown
 
 
 _RAW_SRI_RE = re.compile(r"cathcoil(?P<coil>\d+)-(?P<recording>\d+).projections")
