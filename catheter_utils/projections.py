@@ -63,7 +63,7 @@ def discover_raw(path, validate=False):
             unknown.append(name)
 
     if validate:
-        expectation_for_scheme = {"sri": 3, "hadamard": 1}
+        expectation_for_scheme = {"sri": 3, "fh": 1}
         cache = {}
         for discovery in discoveries:
             filename = discovery["filename"]
@@ -80,7 +80,12 @@ def discover_raw(path, validate=False):
                 expected=(n == expectation_for_scheme[discovery["scheme"]])
             )
 
-    discoveries = pandas.DataFrame(discoveries)
+    if len(discoveries) == 0:
+        discoveries = pandas.DataFrame(
+            columns=["scheme", "recording", "coil", "axis", "dither", "filename", "index"]
+        )
+    else:
+        discoveries = pandas.DataFrame(discoveries)
 
     # TODO
     #   check that all the required rows are there? E.g., FH requires 4
@@ -124,7 +129,7 @@ def guess_contents_raw(filename):
         matched_fields = unpack(match, ["coil", "axis", "dither", "recording"])
         return [
             _ProjectionInfo(
-                scheme="hadamard",
+                scheme="fh",
                 filename=filename,
                 index=0,
                 **matched_fields
