@@ -39,6 +39,9 @@ class Geometry(namedtuple("_GeometryBase", "tip_to_distal tip_to_proximal")):
         """Extrapolate the tip location from the distal and proximal coil
         locations by finding the minimum error coil locations and then
         extrapolating the tip."""
+        distal = distal.reshape((-1, 3))
+        proximal = proximal.reshape((-1, 3))
+
         direction = distal - proximal
         direction = direction / numpy.linalg.norm(direction, axis=1).reshape((direction.shape[0], 1))
         midpoint = 0.5 * (distal + proximal)
@@ -53,6 +56,9 @@ class Geometry(namedtuple("_GeometryBase", "tip_to_distal tip_to_proximal")):
         """Extrapolate the tip location from the distal and proximal coil
         locations by adding an offset to the distal coil location. This
         is the method used historically by our realtime pipeline."""
+        distal = distal.reshape((-1, 3))
+        proximal = proximal.reshape((-1, 3))
+
         direction = distal - proximal
         direction /= numpy.linalg.norm(direction, axis=1).reshape((direction.shape[0], 1))
 
