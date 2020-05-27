@@ -69,21 +69,7 @@ def png(fs, xs, width=3, sigma=0.5, tol=1e-6, max_iter=32):
     return iterative_weighted_centroid(fs, xs, weights, tol=tol, max_iter=max_iter)
 
 
-def _cc(us, vs):
-    """Calculate the correlation coefficient between the given signals."""
-    n = numpy.trapz(us * vs)
-    d = numpy.sqrt(numpy.trapz(us * us) * numpy.trapz(vs * vs))
-    return n / d if d > 0.0 else 0.0
 
-
-def _cc_objective(fs, xs, template):
-    """Produce a function that maps an 'x' coordinate to the correlation of
-    the given signal with the template centered at that coordinate."""
-
-    def _obj(x):
-        return _cc(fs, template(xs - x))
-
-    return _obj
 
 
 class XYZCoordinates:
@@ -135,110 +121,6 @@ class HadamardCoordinates:
         return cls._BACKWARD @ u
 
 
-def correlate_template(data, coordinate_system, template):
-    # Data should be a list of tuples (fs, xs)
-
-    # Initial guess close to peak locations
-    init = coordinate_system.projection_to_scanner(numpy.array([
-        peak(fs, xs) for fs, xs in data
-    ]))
-
-    obj_components = [
-        _cc_objective(fs, xs, template) for fs, xs in data
-    ]
-
-    def obj(x):
-        u = coordinate_system.scanner_to_projection(x)
-        return sum(f(u[axis]) for axis, f in enumerate(obj_components))
-
-    res = scipy.optimize.minimize(
-        obj,
-        init,
-        method="SLSQP",
-    )
-
-    return res['x']
-
-
-def joint_correlate_template(distal_data, proximal_data, coordinate_system, geometry, template):
-
-    # initialize near the peak location
-    init_distal = coordinate_system.projection_to_scanner(numpy.array([
-        peak(fs, xs) for fs, xs in distal_data
-    ]))
-    init_proximal = coordinate_system.projection_to_scanner(numpy.array([
-        peak(fs, xs) for fs, xs in proximal_data
-    ]))
-
-    # Make sure that initial guess satisfies the constraint
-    init_fit = geometry.fit_from_coils_mse(init_distal, init_proximal)
-    init = numpy.concatenate((init_fit.distal, init_fit.proximal), axis=1).reshape(-1)
-
-    obj_distal_components = [
-        _cc_objective(scipy.ndimage.gaussian_filter1d(fs, sigma=1), xs, template) for fs, xs in distal_data
-    ]
-    obj_proximal_components = [
-        _cc_objective(scipy.ndimage.gaussian_filter1d(fs, sigma=1), xs, template) for fs, xs in proximal_data
-    ]
-
-    def obj(x):
-        u1 = coordinate_system.scanner_to_projection(x[0:3])
-        s1 = sum(f(u1[axis]) for axis, f in enumerate(obj_distal_components))
-        u2 = coordinate_system.scanner_to_projection(x[3:6])
-        s2 = sum(f(u2[axis]) for axis, f in enumerate(obj_proximal_components))
-        return s1 + s2
-
-    def constraint(x):
-        return numpy.linalg.norm(x[0:3] - x[3:6]) - geometry.distal_to_proximal
-
-    res = scipy.optimize.minimize(
-        obj,
-        init,
-        method="trust-constr",
-        constraints={"type": "eq", "fun": constraint},
-    )
-
-    res_x = res["x"]
-    return res_x[0:3], res_x[3:6]
-
-
-def cpng(data):
-    """Localize the catheter by correlating the PNG density with the signal."""
-
-    if len(data) == 3:
-        coordinate_system = XYZCoordinates()
-    elif len(data) == 4:
-        coordinate_system = HadamardCoordinates()
-    else:
-        raise ValueError("Expected 3 or 4 projection directions")
-
-    return correlate_template(
-        data,
-        coordinate_system,
-        lambda xs: png_density(xs)
-    )
-
-
-def jpng(distal_data, proximal_data, geometry):
-    """Localize the catheter by correlating the PNG density with the signal
-    while applying the known catheter geometry's constraints."""
-
-    if len(distal_data) == 3 and len(proximal_data) == 3:
-        coordinate_system = XYZCoordinates()
-    elif len(distal_data) == 4 and len(proximal_data) == 4:
-        coordinate_system = HadamardCoordinates()
-    else:
-        raise ValueError("Expected 3 or 4 projection directions")
-
-    return joint_correlate_template(
-        distal_data,
-        proximal_data,
-        coordinate_system,
-        geometry,
-        lambda xs: png_density(xs)
-    )
-
-
 def localize_coil(data, localizer, localizer_args=None, localizer_kwargs=None):
     if localizer_args is None:
         localizer_args = []
@@ -263,7 +145,6 @@ def localize_catheter(distal_data, proximal_data, localizer, localizer_args=None
     return distal, proximal
 
 
-
 def joint_iterative_weighted_centroid(distal_data, proximal_data, geometry, weighting, tol=1e-6, max_iter=256):
 
     if len(distal_data) == 3 and len(proximal_data) == 3:
@@ -273,40 +154,40 @@ def joint_iterative_weighted_centroid(distal_data, proximal_data, geometry, weig
     else:
         raise ValueError("Expected 3 or 4 projection directions")
 
-    distal0 = coordinate_system.projection_to_scanner(numpy.array([
-        png(fs, xs) for fs, xs in distal_data
+    d0 = coordinate_system.projection_to_scanner(numpy.array([
+        peak(fs, xs) for fs, xs in distal_data
     ]))
-    proximal0 = coordinate_system.projection_to_scanner(numpy.array([
-        png(fs, xs) for fs, xs in proximal_data
+    p0 = coordinate_system.projection_to_scanner(numpy.array([
+        peak(fs, xs) for fs, xs in proximal_data
     ]))
 
     for itr in range(max_iter):
-        distal1 = distal0
-        distal = coordinate_system.scanner_to_projection(distal1)
-        distal0 = coordinate_system.projection_to_scanner(
-            numpy.array([centroid(fs * weighting(xs - x), xs) for (fs, xs), x in zip(distal_data, distal)])
+        d1 = d0
+        d = coordinate_system.scanner_to_projection(d1)
+        d0 = coordinate_system.projection_to_scanner(
+            numpy.array([centroid(fs * weighting(xs - x), xs) for (fs, xs), x in zip(distal_data, d)])
         )
 
-        proximal1 = proximal0
-        proximal = coordinate_system.scanner_to_projection(proximal1)
-        proximal0 = coordinate_system.projection_to_scanner(
-            numpy.array([centroid(fs * weighting(xs - x), xs) for (fs, xs), x in zip(proximal_data, proximal)])
+        p1 = p0
+        p = coordinate_system.scanner_to_projection(p1)
+        p0 = coordinate_system.projection_to_scanner(
+            numpy.array([centroid(fs * weighting(xs - x), xs) for (fs, xs), x in zip(proximal_data, p)])
         )
 
-        fit = geometry.fit_from_coils_mse(distal0, proximal0)
-        distal0 = fit.distal.reshape(-1)
-        proximal0 = fit.proximal.reshape(-1)
+        fit = geometry.fit_from_coils_mse(d0, p0)
+        d0 = fit.distal.reshape(-1)
+        p0 = fit.proximal.reshape(-1)
 
-        if numpy.linalg.norm(distal0 - distal1) + numpy.linalg.norm(proximal0 - proximal1) <= tol:
+        if numpy.linalg.norm(d0 - d1) + numpy.linalg.norm(p0 - p1) <= tol:
             logger.debug("converged in %s iterations", itr)
             break
     else:
         logger.debug("maximum iterations reached")
 
-    return distal0, proximal0
+    return d0, p0
 
 
-def jpo(distal_data, proximal_data, geometry, width=3, sigma=0.5, tol=1e-6, max_iter=256):
+def jpng(distal_data, proximal_data, geometry, width=3, sigma=0.5, tol=1e-6, max_iter=256):
 
     def weights(ws):
         return png_density(ws, width, sigma)

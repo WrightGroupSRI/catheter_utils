@@ -43,14 +43,17 @@ class Geometry(namedtuple("_GeometryBase", "tip_to_distal tip_to_proximal")):
         proximal = proximal.reshape((-1, 3))
 
         direction = distal - proximal
-        direction = direction / numpy.linalg.norm(direction, axis=1).reshape((direction.shape[0], 1))
+        norms = numpy.linalg.norm(direction, axis=1).reshape((direction.shape[0], 1))
+        norms += 1e-8
+
+        direction /= norms
         midpoint = 0.5 * (distal + proximal)
 
-        return self.FitFromCoilsResult(
-            tip=midpoint + self.tip_to_midpoint * direction,
-            distal=midpoint + self.distal_to_midpoint * direction,
-            proximal=midpoint - self.distal_to_midpoint * direction
-        )
+        tip = midpoint + self.tip_to_midpoint * direction
+        distal = midpoint + self.distal_to_midpoint * direction
+        proximal = midpoint - self.distal_to_midpoint * direction
+
+        return self.FitFromCoilsResult(tip=tip, distal=distal, proximal=proximal)
 
     def fit_from_coils_distal_offset(self, distal, proximal):
         """Extrapolate the tip location from the distal and proximal coil
@@ -60,13 +63,16 @@ class Geometry(namedtuple("_GeometryBase", "tip_to_distal tip_to_proximal")):
         proximal = proximal.reshape((-1, 3))
 
         direction = distal - proximal
-        direction /= numpy.linalg.norm(direction, axis=1).reshape((direction.shape[0], 1))
+        norms = numpy.linalg.norm(direction, axis=1).reshape((direction.shape[0], 1))
+        norms += 1e-8
 
-        return self.FitFromCoilsResult(
-            tip=distal + self.tip_to_distal * direction,
-            distal=distal.copy(),
-            proximal=distal - self.distal_to_proximal * direction
-        )
+        direction /= norms
+
+        distal = distal.copy()
+        tip = distal + self.tip_to_distal * direction
+        proximal = distal - self.distal_to_proximal * direction
+
+        return self.FitFromCoilsResult(tip=tip, distal=distal, proximal=proximal)
 
 
 def estimate_geometry(distal, proximal):
