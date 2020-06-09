@@ -73,29 +73,29 @@ def png(fs, xs, width=3, sigma=0.5, tol=1e-6, max_iter=32):
 
 
 class XYZCoordinates:
-    """Convert between XYZ projection ("sri") projection and scanner
+    """Convert between XYZ projection ("sri") projection and world
     coordinates."""
 
     @staticmethod
-    def projection_to_scanner(x):
-        """Transform from `projection` coordinates to `scanner`
+    def projection_to_world(x):
+        """Transform from `projection` coordinates to `world`
         coordinates."""
         return x
 
     @staticmethod
-    def scanner_to_projection(u):
-        """Transform from `scanner` coordinates to `projection`
+    def world_to_projection(u):
+        """Transform from `world` coordinates to `projection`
         coordinates."""
         return u
 
 
 class HadamardCoordinates:
-    """Convert between Hadamard projection coordinates ("fh") and scanner
+    """Convert between Hadamard projection coordinates ("fh") and world
     coordinates."""
 
-    # s2p, 3 scanner coordinates -> 4 projection coordinates
+    # s2p, 3 world coordinates -> 4 projection coordinates
     # Each 'projection' coordinate is calculated by projecting
-    # the scanner coordinate onto the corresponding direction
+    # the world coordinate onto the corresponding direction
     # unit vector.
     _BACKWARD = (3**-0.5) * numpy.array([
         [-1, -1, -1],
@@ -104,19 +104,19 @@ class HadamardCoordinates:
         [-1, 1, 1]
     ])
 
-    # p2s, 4 projection coordinates -> 3 scanner coordinates
+    # p2s, 4 projection coordinates -> 3 world coordinates
     # Least squares solution provided by pinv.
     _FORWARD = numpy.linalg.pinv(_BACKWARD)
 
     @classmethod
-    def projection_to_scanner(cls, x):
-        """Transform from `projection` coordinates to `scanner`
+    def projection_to_world(cls, x):
+        """Transform from `projection` coordinates to `world`
         coordinates."""
         return cls._FORWARD @ x
 
     @classmethod
-    def scanner_to_projection(cls, u):
-        """Transform from `scanner` coordinates to `projection`
+    def world_to_projection(cls, u):
+        """Transform from `world` coordinates to `projection`
         coordinates."""
         return cls._BACKWARD @ u
 
@@ -134,7 +134,7 @@ def localize_coil(data, localizer, localizer_args=None, localizer_kwargs=None):
     else:
         raise ValueError("Expected 3 or 4 projection directions")
 
-    return coordinate_system.projection_to_scanner(numpy.array([
+    return coordinate_system.projection_to_world(numpy.array([
         localizer(fs, xs, *localizer_args, **localizer_kwargs) for fs, xs in data
     ]))
 
@@ -154,23 +154,23 @@ def joint_iterative_weighted_centroid(distal_data, proximal_data, geometry, weig
     else:
         raise ValueError("Expected 3 or 4 projection directions")
 
-    d0 = coordinate_system.projection_to_scanner(numpy.array([
+    d0 = coordinate_system.projection_to_world(numpy.array([
         peak(fs, xs) for fs, xs in distal_data
     ]))
-    p0 = coordinate_system.projection_to_scanner(numpy.array([
+    p0 = coordinate_system.projection_to_world(numpy.array([
         peak(fs, xs) for fs, xs in proximal_data
     ]))
 
     for itr in range(max_iter):
         d1 = d0
-        d = coordinate_system.scanner_to_projection(d1)
-        d0 = coordinate_system.projection_to_scanner(
+        d = coordinate_system.world_to_projection(d1)
+        d0 = coordinate_system.projection_to_world(
             numpy.array([centroid(fs * weighting(xs - x), xs) for (fs, xs), x in zip(distal_data, d)])
         )
 
         p1 = p0
-        p = coordinate_system.scanner_to_projection(p1)
-        p0 = coordinate_system.projection_to_scanner(
+        p = coordinate_system.world_to_projection(p1)
+        p0 = coordinate_system.projection_to_world(
             numpy.array([centroid(fs * weighting(xs - x), xs) for (fs, xs), x in zip(proximal_data, p)])
         )
 
