@@ -311,3 +311,40 @@ def _check_file_header(fp):
 
 # end of read_raw details
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+def snr(fs):
+    """Estimate the given signal's SNR."""
+
+    n = len(fs)
+    peak = numpy.max(fs)
+
+    window_size = int(n*0.078125)
+    left_mean = numpy.mean(fs[:window_size])
+    right_mean = numpy.mean(fs[n - window_size:])
+
+    if left_mean > right_mean:
+        stdev = numpy.std(fs[n - window_size:])
+    else:
+        stdev = numpy.std(fs[:window_size])
+
+    return peak / stdev
+
+
+def variance(fs, xs):
+    """Estimate the given signal's variance.
+
+    Treat fs as though it is proportional to a probability density, and
+    calculate its variance."""
+    # Q: should we check that fs is non-negative?
+
+    d0 = numpy.trapz(fs, xs)
+    if d0 <= 0.0:
+        # signal must be flat, this is maximum variance.
+        return 0.25*(xs[-1] - xs[0])**2
+
+    # signal's mean
+    x0 = numpy.trapz(fs*xs, xs)/d0
+
+    # signal's variance
+    return numpy.trapz(fs*(xs - x0)**2, xs)/d0
