@@ -72,9 +72,6 @@ def png(fs, xs, width=3, sigma=0.5, tol=1e-6, max_iter=32):
     return iterative_weighted_centroid(fs, xs, weights, tol=tol, max_iter=max_iter)
 
 
-
-
-
 class XYZCoordinates:
     """Convert between XYZ projection ("sri") projection and world
     coordinates."""
@@ -133,6 +130,9 @@ class HadamardCoordinates:
 
 
 def localize_coil(data, localizer, localizer_args=None, localizer_kwargs=None):
+    """A helper for combining single projection localizations into an estimate
+    of a coil position."""
+
     if localizer_args is None:
         localizer_args = []
     if localizer_kwargs is None:
@@ -151,13 +151,26 @@ def localize_coil(data, localizer, localizer_args=None, localizer_kwargs=None):
 
 
 def localize_catheter(distal_data, proximal_data, localizer, localizer_args=None, localizer_kwargs=None):
+    """A helper for combining single projection localizations into an estimate
+    for two coil locations."""
+
     distal = localize_coil(distal_data, localizer, localizer_args, localizer_kwargs)
     proximal = localize_coil(proximal_data, localizer, localizer_args, localizer_kwargs)
     return distal, proximal
 
 
 class JointIterativeWeightedCentroid:
+    """Responsible for localizing a catheter using the iterative centroid
+    method with errors weighted according to a function of the projections.
+    """
+
     def __init__(self, geometry=None, centroid_weighting=None, err_weighting=None, tol=1e-6, max_itr=10):
+        """Args:
+            geometry, the geometry of the catheter;
+            centroid_weighting, the weighting used in the iterative centroid method (e.g., png);
+            err_weighting, the weighting used to project the observed coordinates to get a fit (e.g., snr, variance);
+            tol, the convergence criterion;
+            max_itr, the maximum number of iterations to allow. """
         self.geometry = geometry or catheter_utils.geometry.GEOMETRY[-1]
         self.centroid_weighting = centroid_weighting or (lambda xs: png_density(xs))
         self.err_weighting = err_weighting
@@ -232,7 +245,7 @@ class JointIterativeWeightedCentroid:
 
 
 def joint_iterative_weighted_centroid(distal_data, proximal_data, geometry, weighting, tol=1e-6, max_iter=256):
-
+    # This is the old joint iterative centroid fn that doesn't use any error weighting.
     if len(distal_data) == 3 and len(proximal_data) == 3:
         coordinate_system = XYZCoordinates()
     elif len(distal_data) == 4 and len(proximal_data) == 4:
@@ -282,7 +295,20 @@ def jpng(distal_data, proximal_data, geometry, width=3, sigma=0.5, tol=1e-6, max
 
 
 class ProjectionWeightedCatheterFit:
+    """This object is responsible for fitting the distal and proximal coils to
+    a sample of observed coordinates while weighting errors according to the
+    given weights."""
+
     def __init__(self, world_to_projection, intercoil_distance, projection_weights_a, a, projection_weights_b, b):
+        """Args:
+            world_to_projection, the projection matrix that sends coil coordinates to projection coordinates;
+            intercoil_distance, the distance between the coils;
+            projection_weights_a, the weights used to measure fit error for coil a;
+            projection_weights_b, the weights used to measure fit error for coil b;
+            a, the observed coordinate of coil a;
+            b, the observed coordinate of coil b;
+        """
+
         pa = projection_weights_a @ world_to_projection
         pb = projection_weights_b @ world_to_projection
 
@@ -299,6 +325,9 @@ class ProjectionWeightedCatheterFit:
         return x[0:3], x[3:6], x[6]
 
     def fun(self, x):
+        """The lagrangian function for the weighted minimum norm problem (mse
+        estimate) with the inter-coil distance constraint."""
+        # There should be a PDF going into more detail.
         a, b, h = self._unpack_x(x)
         delta = a - b
         return numpy.concatenate([
@@ -309,6 +338,8 @@ class ProjectionWeightedCatheterFit:
 
     @property
     def init(self):
+        """The initial guess for the location of the root. Use the unconstrained
+        estimate."""
         return numpy.concatenate([
             self.ba @ self.target_a,  # unconstrained estimate,
             self.bb @ self.target_b,
@@ -316,6 +347,7 @@ class ProjectionWeightedCatheterFit:
         ])
 
     def solve(self):
+        """Find a root of the lagrangian."""
         res = scipy.optimize.root(
             self.fun,
             self.init
@@ -325,6 +357,7 @@ class ProjectionWeightedCatheterFit:
 
     @classmethod
     def fit(cls, p, c, wa, a, wb, b):
+        """Set up the root finding problem and find the root."""
         l = cls(p, c, wa, a, wb, b)
         res = scipy.optimize.root(
             l.fun,
