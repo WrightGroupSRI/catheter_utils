@@ -312,6 +312,22 @@ def _check_file_header(fp):
 # end of read_raw details
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+def fov_info(meta, raw):
+    '''
+    extract FOV info from pandas.Dataframe (meta), and raw numpy data (raw). Output from read_raw function
+    '''
+    if "fov" in meta.columns:
+        pix = len(raw[0][0])
+        if meta["fov"].nunique() == 1:
+            fov = meta["fov"][0]
+            fov = "{} mm (resolution {:.2f} mm)".format(fov, fov/pix)
+        else:
+            min_fov, max_fov = meta["fov"].min(), meta["fov"].max()
+            fov = "{} - {} (resolution {:.2f} - {:.2f} mm)".format(min_fov, max_fov, min_fov/pix, max_fov/pix)
+        return(fov)
+    else:
+        fov = "unknown fov"
+        return(fov)
 
 def snr(fs):
     """Estimate the given signal's SNR."""
