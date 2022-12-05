@@ -73,8 +73,7 @@ def Bias(distal_file, proximal_file, gt_coords, Geometry):
     
     return bias
 
-def trackerr(algorithm, src_path, dest_path, seq_path, distal_index, proximal_index, dither_index, groundtruth,
-             expname):
+def trackerr(seq_path, src_path, groundtruth, algorithm, dest_path, distal_index, proximal_index, dither_index, expname):
     '''
     retrieve .txt files from localization algorithm folders, FOV from projection files, and groundtruth coordinates
     then calculate Bias and Chebyshev tracking error. Data exported as csv with expname (default is experiment name in GroundTruthCoords.csv)
@@ -114,11 +113,6 @@ def trackerr(algorithm, src_path, dest_path, seq_path, distal_index, proximal_in
     fov = [(fov.split(' (resolution', 1)[0]) for fov in fov_list]
 
     # get groundtruth coordinates for distal and proximal coil
-    if isinstance(groundtruth, type(None)):
-        raise Exception("Must enter path for argument --gt / --groundtruth ")
-    elif not groundtruth[-1]=='/':
-        groundtruth=groundtruth+'/'
-
     distal_gtcoord = get_gt.read_results(groundtruth, Exp_name=expname, Coil_index=distal_index)
     proximal_gtcoord = get_gt.read_results(groundtruth, Exp_name=expname, Coil_index=proximal_index)
     if isinstance(distal_gtcoord, type(None)) or isinstance(proximal_gtcoord, type(None)):
@@ -168,10 +162,10 @@ def barplot(dest, expname, x_axis):
     try:
         if isinstance(expname, type(None)):
             df = pd.read_csv(next(glob.iglob("/*".join((dest, '_trackerr.csv')))), usecols=filter_by + ['bias', 'chebyshev'], na_values="NaN")
-        elif os.path.exists(os.path.join(dest, expname + '_trackerr.csv')):
+        else:
             df = pd.read_csv(os.path.join(dest, expname + '_trackerr.csv'), usecols=filter_by + ['bias', 'chebyshev'], na_values="NaN")
     except Exception as err:
-        raise Exception(err)
+        raise Exception(err, f"Error reading trackerr.csv file at {dest}")
 
     # remove selected x-axis from filter then get filter categories
     filter_by.remove(x_axis)
