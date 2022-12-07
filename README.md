@@ -18,6 +18,10 @@ Contains things for producing estimates of a coil location from projection data.
 This includes single projection localization all the way up to full catheter location fit using constrains
 and snr-like error weighting.
 
+## `metrics`
+
+Contains evaluation and display of tracking sequence error metrics. Metric methods include Bias and Chebyshev. 
+
 ## `projections`
 
 Contains code for reading raw projection data, as well as basic calculations like snr.
