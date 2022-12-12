@@ -1,0 +1,13 @@
+settings:
+  #path to tracking sequence test data folder
+  testdata_path: "./tests/testdata/FH_512_dithered_original-2020-07-09T12_16_32.222"
+  #path to algorithm target folder
+  target_path: "./tests/testdata/FH_512_dithered_original-2020-07-09T12_16_32.222/target/dith0"
+  #catheter coils
+  distal_coil_index : 7
+  proximal_coil_index : 6
+  #dither (0 if tracking sequence test data not dithered)
+  dither_index : 0
+  #algorithm parameters - width: window size, sigma: std
+  width: 3.5
+  sigma: 0.75

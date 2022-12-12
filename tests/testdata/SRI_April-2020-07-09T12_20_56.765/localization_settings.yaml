@@ -1,0 +1,14 @@
+settings:
+  #path to tracking sequence test data folder
+  testdata_path: "./tests/testdata/SRI_April-2020-07-09T12_20_56.765"
+  #path to algorithm target folder
+  target_path: "./tests/testdata/SRI_April-2020-07-09T12_20_56.765/target"
+  #catheter coils
+  distal_coil_index : 7
+  proximal_coil_index : 6
+  #dither (0 if tracking sequence test data not dithered)
+  dither_index : 0
+  #algorithm parameters - width: window size, sigma: std
+  width: 3.5
+  sigma: 0.75
+
