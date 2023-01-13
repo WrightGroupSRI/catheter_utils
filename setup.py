@@ -8,5 +8,7 @@ setup(
         "numpy",
         "pandas",
         "scipy",
+        "ruamel.yaml",
+        "schema",
     ],
 )

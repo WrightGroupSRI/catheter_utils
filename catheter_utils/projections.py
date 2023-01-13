@@ -28,6 +28,14 @@ def reconstruct_complex(raw):
     images = scipy.fftpack.fftshift(images, axes=1)
     return images
 
+def _read_raw_and_reconstruct(fn):
+    """Read projection filenames and reconstruct raw signals
+    to projections
+    """
+    meta, projections, _, _ = read_raw(fn, allow_corrupt=False)
+    for i, signal in enumerate(projections):
+        projections[i] = reconstruct(projections[i])
+    return meta, projections
 
 def discover_raw(path, validate=False):
     """Check for possible projections files in the given directory, and
@@ -311,6 +319,131 @@ def _check_file_header(fp):
 
 # end of read_raw details
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+class FindData:
+    '''
+    Extract coil projection data and synchronized rows of distal & proximal pairs
+    '''
+    def __init__(self, toc, recording, distal, proximal, dither):
+        selection = toc[
+            (toc.recording == recording) &
+            (toc.dither == dither) &
+            toc.coil.isin({distal, proximal})
+        ]
+
+        filename_to_data = {
+            fn: _read_raw_and_reconstruct(fn)
+            for fn in sorted(selection.filename.unique())
+        }
+
+        # Need to impose some notion of "simultaneity" to form groups of projections.
+        # I tried grouping by timestamp, but FH projections do not share timestamps.
+
+        n = max(len(meta) for meta, _ in filename_to_data.values())
+
+        # Make sure all of the component data sets have the same length.
+        for fn, (meta, projections) in filename_to_data.items():
+            assert len(meta) == len(projections), "???"
+            while len(meta) < n:
+                meta = meta.append(meta.tail(1), ignore_index=True)
+                projections.append(projections[-1])
+            filename_to_data[fn] = meta, projections
+
+        self._timestamp = numpy.mean(
+            numpy.vstack([meta.timestamp for meta, _ in filename_to_data.values()]).T,
+            axis=1,
+        ).astype(int)
+
+        try:
+            self._resp = numpy.mean(
+                numpy.vstack([meta.resp for meta, _ in filename_to_data.values()]).T,
+                axis=1
+            )
+        except AttributeError:
+            self._resp = numpy.zeros(n)
+
+        try:
+            self._trig = numpy.mean(
+                numpy.vstack([meta.trig for meta, _ in filename_to_data.values()]).T,
+                axis=1
+            )
+        except AttributeError:
+            self._trig = numpy.zeros(n)
+
+        data = {}
+        axes = set()
+        n = None
+        for row in selection.itertuples():
+            meta, projections = filename_to_data[row.filename]
+            data[(row.coil, row.axis)] = meta, projections, row.index
+            axes.add(row.axis)
+            if n is None:
+                n = len(projections)
+            else:
+                m = min(n, len(projections))
+                if m != n:
+                    logger.warning("different readout lengths")
+                    n = m
+
+        if n is None:
+            raise ValueError("expected a length")
+
+        if axes == {0, 1, 2}:
+            # this is an SRI style recording
+            pass
+        elif axes == {0, 1, 2, 3}:
+            # this is a FH style recording
+            pass
+        else:
+            raise ValueError("Expected SRI or FH style recordings")
+
+        self._data = data
+        self._axes = sorted(axes)
+        self._distal = distal
+        self._proximal = proximal
+        self._proximal_cache = {}
+        self._distal_cache = {}
+        self._n = n
+
+    def __len__(self):
+        return self._n
+
+    def _get_coil_data(self, coil, i, cache):
+        assert i < len(self), "index out of range"
+        try:
+            return cache[i]
+        except KeyError:
+            data = []
+            for j in range(len(self._axes)):
+                meta, projections, index = self._data[(coil, j)]
+                fov = meta.fov[i]
+                fs = projections[i][index]
+                xs = numpy.linspace(-fov / 2, fov / 2, len(fs))
+                data.append((fs, xs))
+            cache[i] = data
+            return data
+
+    def get_proximal_data(self, i):
+        return self._get_coil_data(self._proximal, i, self._proximal_cache)
+
+    def get_distal_data(self, i):
+        return self._get_coil_data(self._distal, i, self._distal_cache)
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @property
+    def resp(self):
+        return self._resp
+
+    @property
+    def trig(self):
+        return self._trig
+
+    @property
+    def snr(self):
+        # TODO
+        return numpy.zeros(len(self._timestamp))
 
 def fov_info(meta, raw):
     '''
