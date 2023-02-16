@@ -353,6 +353,8 @@ class FindData:
             axis=1,
         ).astype(int)
 
+        self._alltimestamp = numpy.vstack([meta.timestamp for meta, _ in filename_to_data.values()])
+
         try:
             self._resp = numpy.mean(
                 numpy.vstack([meta.resp for meta, _ in filename_to_data.values()]).T,
@@ -421,6 +423,9 @@ class FindData:
                 data.append((fs, xs))
             cache[i] = data
             return data
+
+    def get_timestamp(self, axis, readout):
+        return self._alltimestamp[axis, readout]
 
     def get_proximal_data(self, i):
         return self._get_coil_data(self._proximal, i, self._proximal_cache)
