@@ -344,7 +344,7 @@ class FindData:
         for fn, (meta, projections) in filename_to_data.items():
             assert len(meta) == len(projections), "???"
             while len(meta) < n:
-                meta = meta.append(meta.tail(1), ignore_index=True)
+                meta=pandas.concat([meta, meta.tail(1)], ignore_index=True)
                 projections.append(projections[-1])
             filename_to_data[fn] = meta, projections
 

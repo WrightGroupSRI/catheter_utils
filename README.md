@@ -37,7 +37,7 @@ Can run all tests with the command `python -m unittest discover tests`.
 The localization test ensures that the current localization algorithms match the original/target localization 
 algorithms output for the same dataset.
 
-**Note: Currently only tests the PNG (peak-normed gaussian) algorithm, to ensure it outputs the same coordinates as 
+**Note: Currently tests the PNG (peak-normed gaussian) and JPNG (joint peak-normed gaussian) algorithm, to ensure it outputs the same coordinates as 
 when originally run based on data acquired and reconstructed during Jay Soni's experiments in April 2020**
 
 Based on testing from multiple systems/numpy versions, the test precision is 2 decimal places. 
@@ -72,15 +72,21 @@ settings:
   #path to algorithm target folder
   target_path: "./tests/testdata/SRI_April-2020-07-09T12_20_56.765/target"
   #catheter coils
-  distal_coil_index : 7
-  proximal_coil_index : 6
+  distal_index : 7
+  proximal_index : 6
+  #catheter geometry (0 if 2018 specs, 1 if 2019+ specs)
+  geometry_index: 1
   #dither (0 if tracking sequence test data not dithered)
   dither_index : 0
-  #algorithm parameters - width: window size, sigma: std
+  #algorithm parameters - width: window size, sigma: std, for png=> tolerance: min difference between current and previous value, for jpng=> tolerance: MSE threshold (mm)
   width: 3.5
   sigma: 0.75
+  png_tol: 1e-6
+  jpng_tol: 1e-2
+  png_max_iter: 32
+  jpng_max_iter: 256
 ```
-Note: Currently width and sigma are global parameters for all localization algorithms. Some localization algorithms are not affected by/ignore changes to width/sigma (ex. peak, centroid). 
+Note: Not all algorithm parameters are used in some localization algorithms. Width used by centroid_around_peak, png, jpng. Sigma used by png and jpng. Png and jpng have individual tolerances/max iterations parameters. 
 
 ### Test Localization Results
 - Summary of latest test saved in /tests/testdata/test_localization_summary.csv

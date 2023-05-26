@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 import pandas as pd
 from datetime import datetime
-from catheter_utils import localization, projections, cathcoords
+from catheter_utils import localization, projections, cathcoords, geometry
 from unittest import TestCase
 import os
 import glob
@@ -51,6 +51,10 @@ def _localizer(fn, args, kwargs):
     def _fn(d, p):
         return localization.localize_catheter(d, p, fn, args, kwargs)
     return _fn
+def _jpng(geo, width=3.0, sigma=0.5, tol=1e-6, max_iter=256):
+    def _fn(d, p):
+        return localization.jpng(d, p, geo, width=width, sigma=sigma, tol=tol, max_iter=max_iter)
+    return _fn
 
 def validate_settings_yaml(settings, file):
     '''validate user changes to localization_settings.yaml and raises error for improper values
@@ -60,11 +64,16 @@ def validate_settings_yaml(settings, file):
         "settings": {
             "testdata_path": And(lambda f: os.path.exists(f), error="Check that testdata_path is valid"),
             "target_path": And(lambda f: os.path.exists(f), error="Check that target_path is valid"),
-            "distal_coil_index": And(lambda n: n>=0 and isinstance(n, int), error="distal coil index must be non-negative integer"),
-            "proximal_coil_index": And(lambda n: n>=0 and isinstance(n, int), error="proximal coil index must be non-negative integer"),
+            "distal_index": And(lambda n: n>=0 and isinstance(n, int), error="distal coil index must be non-negative integer"),
+            "proximal_index": And(lambda n: n>=0 and isinstance(n, int), error="proximal coil index must be non-negative integer"),
+            "geometry_index": And(lambda n: n>=0 and isinstance(n, int), error="geometry index must be non-negative integer"), #add geometry index to all config files
             "dither_index": And(lambda n: n>=0 and isinstance(n, int), error=" dither index must be non-negative integer"),
             "width": And(Or(int,float), lambda n: n>=0, error="width must be a non-negative number"),
             "sigma": Or(int, float, error="sigma must be a number"),
+            "png_tol": And(Or(int,float), lambda n: n>=0, error="png tolerance must be a non-negative number"),
+            "jpng_tol": And(Or(int, float), lambda n: n >= 0, error="jpng tolerance must be a non-negative number"),
+            "png_max_iter": And(lambda n: n>=0 and isinstance(n, int), error="png max iterations must be non-negative integer"),
+            "jpng_max_iter": And(lambda n: n>=0 and isinstance(n, int),error="jpng max iterations must be non-negative integer"),
         }
     })
     try:
@@ -113,7 +122,7 @@ class algorithm_localizer(TestCase):
         results=[]
         # extract configurations from each test folder settings
         for param in self.settings:
-            data_records=coil_testdata(param['testdata_path'], param['distal_coil_index'], param['proximal_coil_index'], param['dither_index'])
+            data_records=coil_testdata(param['testdata_path'], param['distal_index'], param['proximal_index'], param['dither_index'])
             # localization algorithms
             '''(add other localization functions in self.loc_fns)
             See cathy/cli.py -> loc_fns. http://panoptes.sri.utoronto.ca:8088/wright-group/cathy/blob/master/cathy/cli.py#L497
@@ -123,7 +132,8 @@ class algorithm_localizer(TestCase):
                 #"peak": _localizer(localization.peak, None, None),
                 #"centroid": _localizer(localization.centroid, None, None),
                 #"centroid_around_peak": _localizer(localization.centroid_around_peak, None, dict(window_radius=2 * param['width'])),
-                "png": _localizer(localization.png, None, dict(width=param['width'], sigma=param['sigma'])),
+                "png": _localizer(localization.png, None, dict(width=param['width'], sigma=param['sigma'], tol=param['png_tol'], max_iter=param['png_max_iter'])),
+                "jpng": _jpng(geometry.GEOMETRY[param['geometry_index']], width=param['width'], sigma=param['sigma'], tol=param['jpng_tol'], max_iter=param['jpng_max_iter']), #set max iter?
             }
             #test each localization algorithm. current format looks for both distal and proximal coils
             for algorithm,loc_fn in loc_fns.items():
@@ -131,7 +141,7 @@ class algorithm_localizer(TestCase):
                     test_fail=0
                     #target/groundtruth values
                     assert os.path.exists(os.path.join(param['target_path'], algorithm)), f"{os.path.join(param['target_path'], algorithm)} directory could not be found"
-                    t_distal, t_proximal=coil_targetdata(os.path.join(param['target_path'], algorithm), rec, param['distal_coil_index'], param['proximal_coil_index'])
+                    t_distal, t_proximal=coil_targetdata(os.path.join(param['target_path'], algorithm), rec, param['distal_index'], param['proximal_index'])
                     for readout in range(len(data)):
                         d = data.get_distal_data(readout)
                         p = data.get_proximal_data(readout)
@@ -145,7 +155,7 @@ class algorithm_localizer(TestCase):
 
         # summary of results passed/failed
         results = pd.DataFrame(np.array(results),columns=['testdata folder'] + list(self.settings[0].keys())[2:] +
-                                                         ["algorithm", "pass", "#_of_fails", "recording"])
+                                                         ["algorithm", "pass", "#_fails", "rec"])
         print("\n" + results.to_string(index=False))
         results.to_csv(os.path.join(self.cur_dir, "test_localization_summary.csv"), index=False)
 
