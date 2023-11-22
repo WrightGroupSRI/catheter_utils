@@ -134,3 +134,19 @@ def write_file(filename, obj):
 def make_filename(index, coil):
     """Format a cathcoords filename."""
     return "cathcoords-coil{}-{:04d}.txt".format(coil, index)
+
+def get_centroid_mean(coords):
+    """Return the centroid of the given coordinate array. Uses the mean."""
+    return numpy.mean(numpy.array(coords),axis=0)
+
+def get_centroid_median(coords):
+    """Return the centroid of the given coordinate array. Uses the median."""
+    return numpy.median(numpy.array(coords),axis=0)
+
+def get_distances_from_centroid(coords, use_mean=True):
+    """Return a list of distances from the centroid, using the mean centroid by default. Set use_mean to False to use median centroid."""
+    if use_mean:
+        diffs = coords - get_centroid_mean(coords)
+    else:
+        diffs = coords - get_centroid_median(coords)
+    return numpy.linalg.norm(diffs,axis=1)
