@@ -398,6 +398,15 @@ class FindData:
         else:
             raise ValueError("Expected SRI or FH style recordings")
 
+        # SNR for each coil & axis: an array of snrs corresponding to each readout
+        snr_per_readout = {}
+        for (coil,axis) in data.keys():
+            meta, projections, index = data[(coil,axis)]
+            snr_array = []
+            for i in range(n): # for each readout
+                snr_array.append(snr(projections[i][index]))
+            snr_per_readout[(coil,axis)] = snr_array
+
         self._data = data
         self._axes = sorted(axes)
         self._distal = distal
@@ -405,6 +414,10 @@ class FindData:
         self._proximal_cache = {}
         self._distal_cache = {}
         self._n = n
+        self._snrs_per_readout = snr_per_readout # SNR array per coil and axis
+        self._snr_combo_method = 'min'
+        self._snr = None # combined SNR over axes, per coil
+        self.combine_snr()
 
     def __len__(self):
         return self._n
@@ -446,9 +459,80 @@ class FindData:
         return self._trig
 
     @property
+    def snrs_per_readout(self):
+        ''' Return SNRs from each readout
+        Returns a dict whose keys are the coil & axis (both ints) and each
+        value is an array of SNRs for this recording, ordered by time
+
+        Unlike the snr property, snrs_per_readout does not combine the SNR over axes
+        '''
+        return self._snrs_per_readout
+
+    @property
     def snr(self):
-        # TODO
-        return numpy.zeros(len(self._timestamp))
+        ''' Return a dict of SNRs by coil
+        - Each value is an arrays of snrs, one for each set of axes over the recording,
+        ordered by time
+        - Each SNR is a combination of the SNRs of each axis projection
+        - see combine_snr & snr_combo_method for details
+        '''
+        return self._snr
+
+    @property
+    def snr_combo_method(self):
+        ''' The SNR combination method defines how SNRs are combined across axes
+          - Should be one of: 'min', 'median', 'mean'
+          - The default value on construction is 'min'
+        WARNING: on setting, it may take some time to compute the combined SNRs
+        
+        '''
+        return self._snr_combo_method
+
+    @snr_combo_method.setter
+    def snr_combo_method(self, value):
+        if not value in ['min','median','mean']:
+            raise ValueError('Unexpected value for SNR combination method')
+        if (self._snr_combo_method != value):
+            self._snr = None
+            self._snr_combo_method = value
+            self.combine_snr()
+
+    def combine_snr(self):
+        ''' Compute dict of snrs for this projection: the keys are the coils,
+        and each value is an arrays of snrs, one for each set of axes over the recording,
+        ordered by time
+
+        This should not need to be called from outside the class: it is called
+        internally when the projections are read and when the snr_combo_method is changed
+
+        SNRS are combined over axes: 3 axes (X, Y, and Z) for the basic "SRI" 3-projection sequence
+        and 4 axes (4 diagonals of a cube) for the "FH" hadmard-multiplexed sequence
+        The snr_combo_method defines how the SNRs are combined.
+
+        These snr combined values are stored in the snr property. They are computed when this
+        method is called and saved until the snr_combo_method is changed
+        '''
+        snr_per_coil = {}
+        snr_per_coil[self._distal] = []
+        snr_per_coil[self._proximal] = []
+        combo_fxn = numpy.min
+        if (self.snr_combo_method == 'mean'):
+            combo_fxn = numpy.mean
+        elif (self.snr_combo_method == 'median'):
+            combo_fxn = numpy.median
+        elif (self.snr_combo_method != 'min'):
+            raise ValueError('Unexpected value for SNR combination method')
+        if (self._snr == None):
+            # Compute combined snr array
+            for i in range(len(self)):
+                snrs = {}
+                snrs[self._distal] = []
+                snrs[self._proximal] = []
+                for (data_coil,axis) in self._data.keys():
+                    snrs[data_coil].append(self._snrs_per_readout[(data_coil,axis)][i])
+                snr_per_coil[self._distal].append(combo_fxn(snrs[self._distal]))
+                snr_per_coil[self._proximal].append(combo_fxn(snrs[self._proximal]))
+            self._snr = snr_per_coil
 
 def fov_info(meta, raw):
     '''
