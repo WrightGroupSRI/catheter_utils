@@ -156,7 +156,8 @@ def localize_catheter(distal_data, proximal_data, localizer, localizer_args=None
 
     distal = localize_coil(distal_data, localizer, localizer_args, localizer_kwargs)
     proximal = localize_coil(proximal_data, localizer, localizer_args, localizer_kwargs)
-    return distal, proximal
+    # default return 0 iterations TODO: PNG iterations return
+    return distal, proximal, 0
 
 
 class JointIterativeWeightedCentroid:
@@ -240,8 +241,8 @@ class JointIterativeWeightedCentroid:
                 break
         else:
             logger.debug("maximum iterations reached")
-
-        return d0, p0
+        #default return 0 iterations. TODO: return proper number of iterations and confirm wjpng?
+        return d0, p0, 0
 
 
 def joint_iterative_weighted_centroid(distal_data, proximal_data, geometry, weighting, tol=1e-6, max_iter=256):
@@ -283,7 +284,7 @@ def joint_iterative_weighted_centroid(distal_data, proximal_data, geometry, weig
     else:
         logger.debug("maximum iterations reached")
 
-    return d0, p0
+    return d0, p0, itr+1
 
 
 def jpng(distal_data, proximal_data, geometry, width=3, sigma=0.5, tol=1e-6, max_iter=256):
