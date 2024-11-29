@@ -94,6 +94,17 @@ def coil_compare(output, target, coil_name, algorithm, rec, readout, fail_count,
         fail_count += 1
     return(fail_count)
 
+def fixup_paths(settings):
+    ''' Replace relative paths from settings with absolute paths if they do not resolve
+    Only settings known to be paths will be fixed
+    '''
+    fixable_settings = ["testdata_path","target_path"]
+    proj_dir = os.path.split(os.path.dirname(os.path.abspath(__file__)))[0] # one directory up
+    for p in fixable_settings:
+        if p in settings['settings'] and not os.path.exists(settings['settings'][p]):
+            # path not on system: try to make it absolute by prepending it with the project directory
+            settings['settings'][p] = proj_dir + '/' + settings['settings'][p] # let subsequent validation step test new path
+
 #Test case
 class algorithm_localizer(TestCase):
     '''
@@ -108,6 +119,7 @@ class algorithm_localizer(TestCase):
         for file in glob.iglob(self.cur_dir+'/**/*.yaml'):
             with open(file, 'r') as stream:
                 data_loaded = yaml.load(stream)
+            fixup_paths(data_loaded)
             validate_settings_yaml(data_loaded, file)
             self.settings.append(data_loaded["settings"])
 
