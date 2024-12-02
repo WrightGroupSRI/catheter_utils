@@ -45,12 +45,12 @@ def iterative_weighted_centroid(fs, xs, weighting, tol=1e-6, max_iter=32):
         x0 = centroid(fs * weighting(xs - x), xs)
 
         if abs(x0 - x) <= tol:
-            logger.debug("converged in %s iterations", itr)
+            logger.debug("converged in %s iterations", itr+1)
             break
     else:
         logger.debug("maximum iterations reached")
 
-    return x0
+    return x0,itr+1
 
 
 def png_density(xs, width=3, sigma=0.5):
@@ -131,7 +131,12 @@ class HadamardCoordinates:
 
 def localize_coil(data, localizer, localizer_args=None, localizer_kwargs=None):
     """A helper for combining single projection localizations into an estimate
-    of a coil position."""
+    of a coil position.
+
+    Returns the 3d coordinates and number of iterations required for each
+    projection. For non-iterative algorithms, the number of iterations
+    will be 0.
+    """
 
     if localizer_args is None:
         localizer_args = []
@@ -145,19 +150,30 @@ def localize_coil(data, localizer, localizer_args=None, localizer_kwargs=None):
     else:
         raise ValueError("Expected 3 or 4 projection directions")
 
-    return coordinate_system.projection_to_world(numpy.array([
+    coords = [
         localizer(fs, xs, *localizer_args, **localizer_kwargs) for fs, xs in data
-    ]))
+    ]
+    iters = numpy.zeros(len(data))
+    # Iterative functions return both coordinates and number of iterations
+    if len(coords) > 0 and type(coords[0]) is tuple:
+        iters = numpy.array([b for a,b in coords])
+        coords = [a for a,b in coords]
+    return coordinate_system.projection_to_world(numpy.array(coords)),iters
 
 
 def localize_catheter(distal_data, proximal_data, localizer, localizer_args=None, localizer_kwargs=None):
     """A helper for combining single projection localizations into an estimate
-    for two coil locations."""
+    for two coil locations.
 
-    distal = localize_coil(distal_data, localizer, localizer_args, localizer_kwargs)
-    proximal = localize_coil(proximal_data, localizer, localizer_args, localizer_kwargs)
-    # default return 0 iterations TODO: PNG iterations return
-    return distal, proximal, 0
+    Returns the distal coordinates, proximal coordinates, and the highest number
+    of iterations required (zero for non-iterative algorithms)
+    """
+
+    distal,it_distal = localize_coil(distal_data, localizer, localizer_args, localizer_kwargs)
+    proximal,it_prox = localize_coil(proximal_data, localizer, localizer_args, localizer_kwargs)
+    # the largest number of iterations across coils & projections
+    max_iter = numpy.max( numpy.concatenate((it_distal,it_prox)) )
+    return distal, proximal, max_iter
 
 
 class JointIterativeWeightedCentroid:
@@ -187,9 +203,12 @@ class JointIterativeWeightedCentroid:
             raise ValueError("Expected 3 or 4 projection directions")
 
         def target(data):
-            return numpy.array([
+            coords = [
                 iterative_weighted_centroid(fs, xs, self.centroid_weighting) for (fs, xs) in data
-            ])
+                ]
+            if len(coords) > 0 and type(coords[0]) is tuple:
+                coords = [a for a,b in coords]
+            return numpy.array(coords)
 
         d0 = target(distal_data)
         p0 = target(proximal_data)
@@ -237,12 +256,12 @@ class JointIterativeWeightedCentroid:
                 p0 = fit.proximal.reshape(-1)
 
             if numpy.linalg.norm(d0 - d1) <= self.tol and numpy.linalg.norm(p0 - p1) <= self.tol:
-                logger.debug("converged in %s iterations", itr)
+                logger.debug("converged in %s iterations", itr+1)
                 break
         else:
             logger.debug("maximum iterations reached")
-        #default return 0 iterations. TODO: return proper number of iterations and confirm wjpng?
-        return d0, p0, 0
+        #TODO: fix wjpng failing out on some inputs
+        return d0, p0, itr
 
 
 def joint_iterative_weighted_centroid(distal_data, proximal_data, geometry, weighting, tol=1e-6, max_iter=256):
@@ -279,7 +298,7 @@ def joint_iterative_weighted_centroid(distal_data, proximal_data, geometry, weig
         p0 = fit.proximal.reshape(-1)
 
         if numpy.linalg.norm(d0 - d1) + numpy.linalg.norm(p0 - p1) <= tol:
-            logger.debug("converged in %s iterations", itr)
+            logger.debug("converged in %s iterations", itr+1)
             break
     else:
         logger.debug("maximum iterations reached")
