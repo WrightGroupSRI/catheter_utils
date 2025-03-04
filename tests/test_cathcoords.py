@@ -68,7 +68,7 @@ class CathcoordsCentroid(TestCase):
         numpy.testing.assert_array_equal(ctr, [3.0,2.0,3.0])
 
     def test_centroid_distances(self):
-        distances = cathcoords.get_distances_from_centroid(self.near_points)
+        distances,_ = cathcoords.get_distances_from_centroid(self.near_points)
         numpy.testing.assert_array_equal(distances, [1,0,1])
 
 class CathcoordsTipVarianceTest(TestCase):
