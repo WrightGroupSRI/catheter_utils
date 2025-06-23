@@ -6,6 +6,7 @@ import numpy
 import pandas
 import re
 from collections import defaultdict, namedtuple
+import catheter_utils.geometry
 
 logger = logging.getLogger(__name__)
 
@@ -144,9 +145,35 @@ def get_centroid_median(coords):
     return numpy.median(numpy.array(coords),axis=0)
 
 def get_distances_from_centroid(coords, use_mean=True):
-    """Return a list of distances from the centroid, using the mean centroid by default. Set use_mean to False to use median centroid."""
+    """Return a list of distances from the centroid, and centroid, using the mean centroid by default.
+    Set use_mean to False to use median centroid."""
+    centroid = numpy.zeros(1)
     if use_mean:
-        diffs = coords - get_centroid_mean(coords)
+        centroid = get_centroid_mean(coords)
     else:
-        diffs = coords - get_centroid_median(coords)
-    return numpy.linalg.norm(diffs,axis=1)
+        centroid = get_centroid_median(coords)
+    diffs = coords - centroid
+    return numpy.linalg.norm(diffs,axis=1),centroid
+
+def get_tip_variance(distal_file, proximal_file, geometry=None, dof=1):
+    '''returns the variance of the tip coordinates
+
+    From distal and proximal coordinate files: computes
+    the tip locations and the centroid of the tip locations
+
+    Returns the variance of the euclidean distances between
+    tip locations and their centroid. This gives an estimate
+    for the spread of the tip points.
+
+    distal_file: text file of distal coordinates
+	proximal_file: text file of proximal coordinates
+	geometry: the geometry of the coils, estimated if not passed in
+    dof: degrees of freedom for variance calculation, 1 by default
+    '''
+    distal_coords = read_file(distal_file).coords
+    proximal_coords = read_file(proximal_file).coords
+    if (geometry is None):
+        geometry = catheter_utils.geometry.estimate_geometry(distal_coords,proximal_coords)
+    fit_results = geometry.fit_from_coils_mse(distal_coords, proximal_coords)
+    distances,_ = get_distances_from_centroid(fit_results.tip)
+    return numpy.var(distances, ddof=1)
