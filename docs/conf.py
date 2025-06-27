@@ -20,10 +20,7 @@ author = 'Sunnybrook Research Institute'
 
 extensions = [
     'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.todo',
-    'sphinx.ext.coverage',
-    'sphinx.ext.autosummary',
+    'sphinx_click',
     'myst_parser'
     ]
 
