@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>catheter_utils &#8212; catheter_utils  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'modules';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="catheter_utils package" href="catheter_utils.html" />
+    <link rel="prev" title="Catheter Utils" href="readme.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">catheter_utils  documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Catheter Utils</a></li>
+<li class="toctree-l1 current active has-children"><a class="current reference internal" href="#">catheter_utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="catheter_utils.html">catheter_utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/modules.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>catheter_utils</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="catheter-utils">
+<h1>catheter_utils<a class="headerlink" href="#catheter-utils" title="Link to this heading">#</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="catheter_utils.html">catheter_utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="catheter_utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="catheter_utils.html#module-catheter_utils.cathcoords">catheter_utils.cathcoords module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.Cathcoords"><code class="docutils literal notranslate"><span class="pre">Cathcoords</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.Cathcoords.coords"><code class="docutils literal notranslate"><span class="pre">Cathcoords.coords</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.Cathcoords.resps"><code class="docutils literal notranslate"><span class="pre">Cathcoords.resps</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.Cathcoords.snr"><code class="docutils literal notranslate"><span class="pre">Cathcoords.snr</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.Cathcoords.times"><code class="docutils literal notranslate"><span class="pre">Cathcoords.times</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.Cathcoords.trigs"><code class="docutils literal notranslate"><span class="pre">Cathcoords.trigs</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.discover_files"><code class="docutils literal notranslate"><span class="pre">discover_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.get_centroid_mean"><code class="docutils literal notranslate"><span class="pre">get_centroid_mean()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.get_centroid_median"><code class="docutils literal notranslate"><span class="pre">get_centroid_median()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.get_distances_from_centroid"><code class="docutils literal notranslate"><span class="pre">get_distances_from_centroid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.get_tip_variance"><code class="docutils literal notranslate"><span class="pre">get_tip_variance()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.make_filename"><code class="docutils literal notranslate"><span class="pre">make_filename()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.read_file"><code class="docutils literal notranslate"><span class="pre">read_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.read_pair"><code class="docutils literal notranslate"><span class="pre">read_pair()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.cathcoords.write_file"><code class="docutils literal notranslate"><span class="pre">write_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="catheter_utils.html#module-catheter_utils.geometry">catheter_utils.geometry module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.geometry.GEOMETRY"><code class="docutils literal notranslate"><span class="pre">GEOMETRY</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.geometry.Geometry"><code class="docutils literal notranslate"><span class="pre">Geometry</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.geometry.Geometry.FitFromCoilsResult"><code class="docutils literal notranslate"><span class="pre">Geometry.FitFromCoilsResult</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.geometry.Geometry.distal_to_midpoint"><code class="docutils literal notranslate"><span class="pre">Geometry.distal_to_midpoint</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.geometry.Geometry.distal_to_proximal"><code class="docutils literal notranslate"><span class="pre">Geometry.distal_to_proximal</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.geometry.Geometry.fit_from_coils_distal_offset"><code class="docutils literal notranslate"><span class="pre">Geometry.fit_from_coils_distal_offset()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.geometry.Geometry.fit_from_coils_mse"><code class="docutils literal notranslate"><span class="pre">Geometry.fit_from_coils_mse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.geometry.Geometry.tip_to_midpoint"><code class="docutils literal notranslate"><span class="pre">Geometry.tip_to_midpoint</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.geometry.estimate_geometry"><code class="docutils literal notranslate"><span class="pre">estimate_geometry()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="catheter_utils.html#module-catheter_utils.localization">catheter_utils.localization module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.HadamardCoordinates"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.HadamardCoordinates.projection_to_world"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates.projection_to_world()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.HadamardCoordinates.world_to_projection"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates.world_to_projection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.HadamardCoordinates.world_to_projection_mat"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates.world_to_projection_mat()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.JointIterativeWeightedCentroid"><code class="docutils literal notranslate"><span class="pre">JointIterativeWeightedCentroid</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.JointIterativeWeightedCentroid.localize"><code class="docutils literal notranslate"><span class="pre">JointIterativeWeightedCentroid.localize()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.ProjectionWeightedCatheterFit"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.ProjectionWeightedCatheterFit.fit"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.fit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.ProjectionWeightedCatheterFit.fun"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.fun()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.ProjectionWeightedCatheterFit.init"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.init</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.ProjectionWeightedCatheterFit.solve"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.solve()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.XYZCoordinates"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.XYZCoordinates.projection_to_world"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates.projection_to_world()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.XYZCoordinates.world_to_projection"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates.world_to_projection()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.XYZCoordinates.world_to_projection_mat"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates.world_to_projection_mat()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.centroid"><code class="docutils literal notranslate"><span class="pre">centroid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.centroid_around_peak"><code class="docutils literal notranslate"><span class="pre">centroid_around_peak()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.iterative_weighted_centroid"><code class="docutils literal notranslate"><span class="pre">iterative_weighted_centroid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.joint_iterative_weighted_centroid"><code class="docutils literal notranslate"><span class="pre">joint_iterative_weighted_centroid()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.jpng"><code class="docutils literal notranslate"><span class="pre">jpng()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.localize_catheter"><code class="docutils literal notranslate"><span class="pre">localize_catheter()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.localize_coil"><code class="docutils literal notranslate"><span class="pre">localize_coil()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.peak"><code class="docutils literal notranslate"><span class="pre">peak()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.png"><code class="docutils literal notranslate"><span class="pre">png()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.localization.png_density"><code class="docutils literal notranslate"><span class="pre">png_density()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="catheter_utils.html#module-catheter_utils.metrics">catheter_utils.metrics module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.metrics.Bias"><code class="docutils literal notranslate"><span class="pre">Bias()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.metrics.Chebyshev"><code class="docutils literal notranslate"><span class="pre">Chebyshev()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.metrics.barplot"><code class="docutils literal notranslate"><span class="pre">barplot()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.metrics.get_bias_array"><code class="docutils literal notranslate"><span class="pre">get_bias_array()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.metrics.get_coords"><code class="docutils literal notranslate"><span class="pre">get_coords()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.metrics.trackerr"><code class="docutils literal notranslate"><span class="pre">trackerr()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="catheter_utils.html#module-catheter_utils.projections">catheter_utils.projections module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.FindData"><code class="docutils literal notranslate"><span class="pre">FindData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.FindData.combine_snr"><code class="docutils literal notranslate"><span class="pre">FindData.combine_snr()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.FindData.get_distal_data"><code class="docutils literal notranslate"><span class="pre">FindData.get_distal_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.FindData.get_proximal_data"><code class="docutils literal notranslate"><span class="pre">FindData.get_proximal_data()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.FindData.get_timestamp"><code class="docutils literal notranslate"><span class="pre">FindData.get_timestamp()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.FindData.resp"><code class="docutils literal notranslate"><span class="pre">FindData.resp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.FindData.snr"><code class="docutils literal notranslate"><span class="pre">FindData.snr</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.FindData.snr_combo_method"><code class="docutils literal notranslate"><span class="pre">FindData.snr_combo_method</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.FindData.snrs_per_readout"><code class="docutils literal notranslate"><span class="pre">FindData.snrs_per_readout</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.FindData.timestamp"><code class="docutils literal notranslate"><span class="pre">FindData.timestamp</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.FindData.trig"><code class="docutils literal notranslate"><span class="pre">FindData.trig</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.ProjectionFileCorrupted"><code class="docutils literal notranslate"><span class="pre">ProjectionFileCorrupted</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.ProjectionFileVersionCheck"><code class="docutils literal notranslate"><span class="pre">ProjectionFileVersionCheck</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.ReadRawResult"><code class="docutils literal notranslate"><span class="pre">ReadRawResult</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.ReadRawResult.corrupt"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.corrupt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.ReadRawResult.legacy_version"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.legacy_version</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.ReadRawResult.meta"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.meta</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.ReadRawResult.raw"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.raw</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.discover_raw"><code class="docutils literal notranslate"><span class="pre">discover_raw()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.fov_info"><code class="docutils literal notranslate"><span class="pre">fov_info()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.guess_contents_raw"><code class="docutils literal notranslate"><span class="pre">guess_contents_raw()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.read_raw"><code class="docutils literal notranslate"><span class="pre">read_raw()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.reconstruct"><code class="docutils literal notranslate"><span class="pre">reconstruct()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.reconstruct_complex"><code class="docutils literal notranslate"><span class="pre">reconstruct_complex()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.snr"><code class="docutils literal notranslate"><span class="pre">snr()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="catheter_utils.html#catheter_utils.projections.variance"><code class="docutils literal notranslate"><span class="pre">variance()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="catheter_utils.html#module-catheter_utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="readme.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Catheter Utils</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="catheter_utils.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">catheter_utils package</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sunnybrook Research Institute
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Sunnybrook Research Institute.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

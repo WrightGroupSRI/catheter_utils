@@ -1,0 +1,1306 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>catheter_utils package &#8212; catheter_utils  documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.2/css/all.min.css?digest=dfe6caa3a7d634c4db9b" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=eba8b062" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b" />
+  <script src="_static/vendor/fontawesome/6.5.2/js/all.min.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=887ef09a"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'catheter_utils';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="catheter_utils" href="modules.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-primary-sidebar-checkbox"/>
+  <label class="overlay overlay-primary" for="pst-primary-sidebar-checkbox"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          id="pst-secondary-sidebar-checkbox"/>
+  <label class="overlay overlay-secondary" for="pst-secondary-sidebar-checkbox"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search..."
+         aria-label="Search..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">catheter_utils  documentation</p>
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Catheter Utils</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="modules.html">catheter_utils</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">catheter_utils package</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/catheter_utils.rst" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.rst</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="theme-switch fa-solid fa-sun fa-lg" data-mode="light"></i>
+    <i class="theme-switch fa-solid fa-moon fa-lg" data-mode="dark"></i>
+    <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"></i>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm pst-navbar-icon search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>catheter_utils package</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils.cathcoords">catheter_utils.cathcoords module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords"><code class="docutils literal notranslate"><span class="pre">Cathcoords</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords.coords"><code class="docutils literal notranslate"><span class="pre">Cathcoords.coords</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords.resps"><code class="docutils literal notranslate"><span class="pre">Cathcoords.resps</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords.snr"><code class="docutils literal notranslate"><span class="pre">Cathcoords.snr</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords.times"><code class="docutils literal notranslate"><span class="pre">Cathcoords.times</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords.trigs"><code class="docutils literal notranslate"><span class="pre">Cathcoords.trigs</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.discover_files"><code class="docutils literal notranslate"><span class="pre">discover_files()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.get_centroid_mean"><code class="docutils literal notranslate"><span class="pre">get_centroid_mean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.get_centroid_median"><code class="docutils literal notranslate"><span class="pre">get_centroid_median()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.get_distances_from_centroid"><code class="docutils literal notranslate"><span class="pre">get_distances_from_centroid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.get_tip_variance"><code class="docutils literal notranslate"><span class="pre">get_tip_variance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.make_filename"><code class="docutils literal notranslate"><span class="pre">make_filename()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.read_file"><code class="docutils literal notranslate"><span class="pre">read_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.read_pair"><code class="docutils literal notranslate"><span class="pre">read_pair()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.write_file"><code class="docutils literal notranslate"><span class="pre">write_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils.geometry">catheter_utils.geometry module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.GEOMETRY"><code class="docutils literal notranslate"><span class="pre">GEOMETRY</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry"><code class="docutils literal notranslate"><span class="pre">Geometry</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult"><code class="docutils literal notranslate"><span class="pre">Geometry.FitFromCoilsResult</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult.distal"><code class="docutils literal notranslate"><span class="pre">Geometry.FitFromCoilsResult.distal</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult.proximal"><code class="docutils literal notranslate"><span class="pre">Geometry.FitFromCoilsResult.proximal</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult.tip"><code class="docutils literal notranslate"><span class="pre">Geometry.FitFromCoilsResult.tip</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.distal_to_midpoint"><code class="docutils literal notranslate"><span class="pre">Geometry.distal_to_midpoint</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.distal_to_proximal"><code class="docutils literal notranslate"><span class="pre">Geometry.distal_to_proximal</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.fit_from_coils_distal_offset"><code class="docutils literal notranslate"><span class="pre">Geometry.fit_from_coils_distal_offset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.fit_from_coils_mse"><code class="docutils literal notranslate"><span class="pre">Geometry.fit_from_coils_mse()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.tip_to_midpoint"><code class="docutils literal notranslate"><span class="pre">Geometry.tip_to_midpoint</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.estimate_geometry"><code class="docutils literal notranslate"><span class="pre">estimate_geometry()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils.localization">catheter_utils.localization module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.HadamardCoordinates"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.HadamardCoordinates.projection_to_world"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates.projection_to_world()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.HadamardCoordinates.world_to_projection"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates.world_to_projection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.HadamardCoordinates.world_to_projection_mat"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates.world_to_projection_mat()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.JointIterativeWeightedCentroid"><code class="docutils literal notranslate"><span class="pre">JointIterativeWeightedCentroid</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.JointIterativeWeightedCentroid.localize"><code class="docutils literal notranslate"><span class="pre">JointIterativeWeightedCentroid.localize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.ProjectionWeightedCatheterFit"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.fit"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.fun"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.fun()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.init"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.init</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.solve"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.solve()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.XYZCoordinates"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.XYZCoordinates.projection_to_world"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates.projection_to_world()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.XYZCoordinates.world_to_projection"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates.world_to_projection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.XYZCoordinates.world_to_projection_mat"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates.world_to_projection_mat()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.centroid"><code class="docutils literal notranslate"><span class="pre">centroid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.centroid_around_peak"><code class="docutils literal notranslate"><span class="pre">centroid_around_peak()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.iterative_weighted_centroid"><code class="docutils literal notranslate"><span class="pre">iterative_weighted_centroid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.joint_iterative_weighted_centroid"><code class="docutils literal notranslate"><span class="pre">joint_iterative_weighted_centroid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.jpng"><code class="docutils literal notranslate"><span class="pre">jpng()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.localize_catheter"><code class="docutils literal notranslate"><span class="pre">localize_catheter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.localize_coil"><code class="docutils literal notranslate"><span class="pre">localize_coil()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.peak"><code class="docutils literal notranslate"><span class="pre">peak()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.png"><code class="docutils literal notranslate"><span class="pre">png()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.png_density"><code class="docutils literal notranslate"><span class="pre">png_density()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils.metrics">catheter_utils.metrics module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.Bias"><code class="docutils literal notranslate"><span class="pre">Bias()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.Chebyshev"><code class="docutils literal notranslate"><span class="pre">Chebyshev()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.barplot"><code class="docutils literal notranslate"><span class="pre">barplot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.get_bias_array"><code class="docutils literal notranslate"><span class="pre">get_bias_array()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.get_coords"><code class="docutils literal notranslate"><span class="pre">get_coords()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.trackerr"><code class="docutils literal notranslate"><span class="pre">trackerr()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils.projections">catheter_utils.projections module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData"><code class="docutils literal notranslate"><span class="pre">FindData</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.combine_snr"><code class="docutils literal notranslate"><span class="pre">FindData.combine_snr()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.get_distal_data"><code class="docutils literal notranslate"><span class="pre">FindData.get_distal_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.get_proximal_data"><code class="docutils literal notranslate"><span class="pre">FindData.get_proximal_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.get_timestamp"><code class="docutils literal notranslate"><span class="pre">FindData.get_timestamp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.resp"><code class="docutils literal notranslate"><span class="pre">FindData.resp</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.snr"><code class="docutils literal notranslate"><span class="pre">FindData.snr</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.snr_combo_method"><code class="docutils literal notranslate"><span class="pre">FindData.snr_combo_method</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.snrs_per_readout"><code class="docutils literal notranslate"><span class="pre">FindData.snrs_per_readout</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.timestamp"><code class="docutils literal notranslate"><span class="pre">FindData.timestamp</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.trig"><code class="docutils literal notranslate"><span class="pre">FindData.trig</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ProjectionFileCorrupted"><code class="docutils literal notranslate"><span class="pre">ProjectionFileCorrupted</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ProjectionFileVersionCheck"><code class="docutils literal notranslate"><span class="pre">ProjectionFileVersionCheck</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ReadRawResult"><code class="docutils literal notranslate"><span class="pre">ReadRawResult</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ReadRawResult.corrupt"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.corrupt</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ReadRawResult.legacy_version"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.legacy_version</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ReadRawResult.meta"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.meta</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ReadRawResult.raw"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.raw</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.discover_raw"><code class="docutils literal notranslate"><span class="pre">discover_raw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.fov_info"><code class="docutils literal notranslate"><span class="pre">fov_info()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.guess_contents_raw"><code class="docutils literal notranslate"><span class="pre">guess_contents_raw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.read_raw"><code class="docutils literal notranslate"><span class="pre">read_raw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.reconstruct"><code class="docutils literal notranslate"><span class="pre">reconstruct()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.reconstruct_complex"><code class="docutils literal notranslate"><span class="pre">reconstruct_complex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.snr"><code class="docutils literal notranslate"><span class="pre">snr()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.variance"><code class="docutils literal notranslate"><span class="pre">variance()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils">Module contents</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="catheter-utils-package">
+<h1>catheter_utils package<a class="headerlink" href="#catheter-utils-package" title="Link to this heading">#</a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading">#</a></h2>
+</section>
+<section id="module-catheter_utils.cathcoords">
+<span id="catheter-utils-cathcoords-module"></span><h2>catheter_utils.cathcoords module<a class="headerlink" href="#module-catheter_utils.cathcoords" title="Link to this heading">#</a></h2>
+<p>Manipulate cathcoords files.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.Cathcoords">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">catheter_utils.cathcoords.</span></span><span class="sig-name descname"><span class="pre">Cathcoords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">snr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">times</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trigs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resps</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.cathcoords.Cathcoords" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<p>Object representing all the data that goes into a cathcoords file.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.Cathcoords.coords">
+<span class="sig-name descname"><span class="pre">coords</span></span><a class="headerlink" href="#catheter_utils.cathcoords.Cathcoords.coords" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.Cathcoords.resps">
+<span class="sig-name descname"><span class="pre">resps</span></span><a class="headerlink" href="#catheter_utils.cathcoords.Cathcoords.resps" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 4</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.Cathcoords.snr">
+<span class="sig-name descname"><span class="pre">snr</span></span><a class="headerlink" href="#catheter_utils.cathcoords.Cathcoords.snr" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.Cathcoords.times">
+<span class="sig-name descname"><span class="pre">times</span></span><a class="headerlink" href="#catheter_utils.cathcoords.Cathcoords.times" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.Cathcoords.trigs">
+<span class="sig-name descname"><span class="pre">trigs</span></span><a class="headerlink" href="#catheter_utils.cathcoords.Cathcoords.trigs" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.discover_files">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.cathcoords.</span></span><span class="sig-name descname"><span class="pre">discover_files</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.cathcoords.discover_files" title="Link to this definition">#</a></dt>
+<dd><p>Search the given directory for cathcoords files.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.get_centroid_mean">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.cathcoords.</span></span><span class="sig-name descname"><span class="pre">get_centroid_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.cathcoords.get_centroid_mean" title="Link to this definition">#</a></dt>
+<dd><p>Return the centroid of the given coordinate array. Uses the mean.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.get_centroid_median">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.cathcoords.</span></span><span class="sig-name descname"><span class="pre">get_centroid_median</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.cathcoords.get_centroid_median" title="Link to this definition">#</a></dt>
+<dd><p>Return the centroid of the given coordinate array. Uses the median.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.get_distances_from_centroid">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.cathcoords.</span></span><span class="sig-name descname"><span class="pre">get_distances_from_centroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_mean</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.cathcoords.get_distances_from_centroid" title="Link to this definition">#</a></dt>
+<dd><p>Return a list of distances from the centroid, and centroid, using the mean centroid by default.
+Set use_mean to False to use median centroid.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.get_tip_variance">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.cathcoords.</span></span><span class="sig-name descname"><span class="pre">get_tip_variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distal_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dof</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.cathcoords.get_tip_variance" title="Link to this definition">#</a></dt>
+<dd><p>returns the variance of the tip coordinates</p>
+<p>From distal and proximal coordinate files: computes
+the tip locations and the centroid of the tip locations</p>
+<p>Returns the variance of the euclidean distances between
+tip locations and their centroid. This gives an estimate
+for the spread of the tip points.</p>
+<dl class="simple">
+<dt>distal_file: text file of distal coordinates</dt><dd><p>proximal_file: text file of proximal coordinates
+geometry: the geometry of the coils, estimated if not passed in</p>
+</dd>
+</dl>
+<p>dof: degrees of freedom for variance calculation, 1 by default</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.make_filename">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.cathcoords.</span></span><span class="sig-name descname"><span class="pre">make_filename</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">coil</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.cathcoords.make_filename" title="Link to this definition">#</a></dt>
+<dd><p>Format a cathcoords filename.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.read_file">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.cathcoords.</span></span><span class="sig-name descname"><span class="pre">read_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.cathcoords.read_file" title="Link to this definition">#</a></dt>
+<dd><p>Extract data from a cathcoords file.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.read_pair">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.cathcoords.</span></span><span class="sig-name descname"><span class="pre">read_pair</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dist_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prox_filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.cathcoords.read_pair" title="Link to this definition">#</a></dt>
+<dd><p>Extract data from a pair of cathcoords files and do simple checks for
+consistency.</p>
+<p>Different coil files may have a different number of rows for the same
+recording. This will match rows using timestamps so that coords, snr, etc
+are paired up correctly.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.cathcoords.write_file">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.cathcoords.</span></span><span class="sig-name descname"><span class="pre">write_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.cathcoords.write_file" title="Link to this definition">#</a></dt>
+<dd><p>Write catheter coil data to the specified file.</p>
+</dd></dl>
+
+</section>
+<section id="module-catheter_utils.geometry">
+<span id="catheter-utils-geometry-module"></span><h2>catheter_utils.geometry module<a class="headerlink" href="#module-catheter_utils.geometry" title="Link to this heading">#</a></h2>
+<p>This module contains things related to the geometry of our MR compatible
+catheters. Calculations involving specific information about their measurements
+can be put in here. E.g., extrapolating the tip from observations of the
+tracking coil locations.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="catheter_utils.geometry.GEOMETRY">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.geometry.</span></span><span class="sig-name descname"><span class="pre">GEOMETRY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">((9.41,</span> <span class="pre">17.97),</span> <span class="pre">(9.07,</span> <span class="pre">16.84))</span></em><a class="headerlink" href="#catheter_utils.geometry.GEOMETRY" title="Link to this definition">#</a></dt>
+<dd><p>Measurements of each of our models of catheter in the order that we received them.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="catheter_utils.geometry.Geometry">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">catheter_utils.geometry.</span></span><span class="sig-name descname"><span class="pre">Geometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tip_to_distal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tip_to_proximal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.geometry.Geometry" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">_GeometryBase</span></code></p>
+<p>The measurements that describe the geometry of a catheter.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="catheter_utils.geometry.Geometry.FitFromCoilsResult">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">FitFromCoilsResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tip</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<p>The various methods of fitting catheter coordinate locations from
+coil observations all return the same kind of data.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.geometry.Geometry.FitFromCoilsResult.distal">
+<span class="sig-name descname"><span class="pre">distal</span></span><a class="headerlink" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult.distal" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.geometry.Geometry.FitFromCoilsResult.proximal">
+<span class="sig-name descname"><span class="pre">proximal</span></span><a class="headerlink" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult.proximal" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.geometry.Geometry.FitFromCoilsResult.tip">
+<span class="sig-name descname"><span class="pre">tip</span></span><a class="headerlink" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult.tip" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="catheter_utils.geometry.Geometry.distal_to_midpoint">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distal_to_midpoint</span></span><a class="headerlink" href="#catheter_utils.geometry.Geometry.distal_to_midpoint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="catheter_utils.geometry.Geometry.distal_to_proximal">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">distal_to_proximal</span></span><a class="headerlink" href="#catheter_utils.geometry.Geometry.distal_to_proximal" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.geometry.Geometry.fit_from_coils_distal_offset">
+<span class="sig-name descname"><span class="pre">fit_from_coils_distal_offset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.geometry.Geometry.fit_from_coils_distal_offset" title="Link to this definition">#</a></dt>
+<dd><p>Extrapolate the tip location from the distal and proximal coil
+locations by adding an offset to the distal coil location. This
+is the method used historically by our realtime pipeline.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.geometry.Geometry.fit_from_coils_mse">
+<span class="sig-name descname"><span class="pre">fit_from_coils_mse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.geometry.Geometry.fit_from_coils_mse" title="Link to this definition">#</a></dt>
+<dd><p>Extrapolate the tip location from the distal and proximal coil
+locations by finding the minimum error coil locations and then
+extrapolating the tip.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="catheter_utils.geometry.Geometry.tip_to_midpoint">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">tip_to_midpoint</span></span><a class="headerlink" href="#catheter_utils.geometry.Geometry.tip_to_midpoint" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.geometry.estimate_geometry">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.geometry.</span></span><span class="sig-name descname"><span class="pre">estimate_geometry</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.geometry.estimate_geometry" title="Link to this definition">#</a></dt>
+<dd><p>Given a set of catheter coordinates, find the catheter specifications
+that best fit the data.</p>
+</dd></dl>
+
+</section>
+<section id="module-catheter_utils.localization">
+<span id="catheter-utils-localization-module"></span><h2>catheter_utils.localization module<a class="headerlink" href="#module-catheter_utils.localization" title="Link to this heading">#</a></h2>
+<p>Catheter localization algorithms. Take projection data and produce
+coordinate estimates.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="catheter_utils.localization.HadamardCoordinates">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">HadamardCoordinates</span></span><a class="headerlink" href="#catheter_utils.localization.HadamardCoordinates" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Convert between Hadamard projection coordinates (“fh”) and world
+coordinates.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.localization.HadamardCoordinates.projection_to_world">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">projection_to_world</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.HadamardCoordinates.projection_to_world" title="Link to this definition">#</a></dt>
+<dd><p>Transform from <cite>projection</cite> coordinates to <cite>world</cite>
+coordinates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.localization.HadamardCoordinates.world_to_projection">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">world_to_projection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.HadamardCoordinates.world_to_projection" title="Link to this definition">#</a></dt>
+<dd><p>Transform from <cite>world</cite> coordinates to <cite>projection</cite>
+coordinates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.localization.HadamardCoordinates.world_to_projection_mat">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">world_to_projection_mat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.HadamardCoordinates.world_to_projection_mat" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="catheter_utils.localization.JointIterativeWeightedCentroid">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">JointIterativeWeightedCentroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geometry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centroid_weighting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">err_weighting</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_itr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.JointIterativeWeightedCentroid" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Responsible for localizing a catheter using the iterative centroid
+method with errors weighted according to a function of the projections.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.localization.JointIterativeWeightedCentroid.localize">
+<span class="sig-name descname"><span class="pre">localize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distal_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.JointIterativeWeightedCentroid.localize" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="catheter_utils.localization.ProjectionWeightedCatheterFit">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">ProjectionWeightedCatheterFit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">world_to_projection</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">intercoil_distance</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection_weights_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projection_weights_b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.ProjectionWeightedCatheterFit" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This object is responsible for fitting the distal and proximal coils to
+a sample of observed coordinates while weighting errors according to the
+given weights.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.localization.ProjectionWeightedCatheterFit.fit">
+<em class="property"><span class="k"><span class="pre">classmethod</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wb</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.fit" title="Link to this definition">#</a></dt>
+<dd><p>Set up the root finding problem and find the root.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.localization.ProjectionWeightedCatheterFit.fun">
+<span class="sig-name descname"><span class="pre">fun</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.fun" title="Link to this definition">#</a></dt>
+<dd><p>The lagrangian function for the weighted minimum norm problem (mse
+estimate) with the inter-coil distance constraint.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="catheter_utils.localization.ProjectionWeightedCatheterFit.init">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">init</span></span><a class="headerlink" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.init" title="Link to this definition">#</a></dt>
+<dd><p>The initial guess for the location of the root. Use the unconstrained
+estimate.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.localization.ProjectionWeightedCatheterFit.solve">
+<span class="sig-name descname"><span class="pre">solve</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.solve" title="Link to this definition">#</a></dt>
+<dd><p>Find a root of the lagrangian.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="catheter_utils.localization.XYZCoordinates">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">XYZCoordinates</span></span><a class="headerlink" href="#catheter_utils.localization.XYZCoordinates" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Convert between XYZ projection (“sri”) projection and world
+coordinates.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.localization.XYZCoordinates.projection_to_world">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">projection_to_world</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.XYZCoordinates.projection_to_world" title="Link to this definition">#</a></dt>
+<dd><p>Transform from <cite>projection</cite> coordinates to <cite>world</cite>
+coordinates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.localization.XYZCoordinates.world_to_projection">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">world_to_projection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.XYZCoordinates.world_to_projection" title="Link to this definition">#</a></dt>
+<dd><p>Transform from <cite>world</cite> coordinates to <cite>projection</cite>
+coordinates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.localization.XYZCoordinates.world_to_projection_mat">
+<em class="property"><span class="k"><span class="pre">static</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">world_to_projection_mat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.XYZCoordinates.world_to_projection_mat" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.localization.centroid">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">centroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.centroid" title="Link to this definition">#</a></dt>
+<dd><p>Localize the catheter in the projection direction by finding the
+centroid of the signal.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.localization.centroid_around_peak">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">centroid_around_peak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">window_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.centroid_around_peak" title="Link to this definition">#</a></dt>
+<dd><p>Localize the catheter in the projection direction by finding the
+centroid of the signal in a window centered around the peak.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.localization.iterative_weighted_centroid">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">iterative_weighted_centroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weighting</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.iterative_weighted_centroid" title="Link to this definition">#</a></dt>
+<dd><p>Localize the catheter in the projection direction by iteratively
+finding the centroid using a weighting function centered at the
+previous location.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.localization.joint_iterative_weighted_centroid">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">joint_iterative_weighted_centroid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distal_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">weighting</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.joint_iterative_weighted_centroid" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.localization.jpng">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">jpng</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distal_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">geometry</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">256</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.jpng" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.localization.localize_catheter">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">localize_catheter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distal_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">localizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">localizer_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">localizer_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.localize_catheter" title="Link to this definition">#</a></dt>
+<dd><p>A helper for combining single projection localizations into an estimate
+for two coil locations.</p>
+<p>Returns the distal coordinates, proximal coordinates, and the highest number
+of iterations required (zero for non-iterative algorithms)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.localization.localize_coil">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">localize_coil</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">localizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">localizer_args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">localizer_kwargs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.localize_coil" title="Link to this definition">#</a></dt>
+<dd><p>A helper for combining single projection localizations into an estimate
+of a coil position.</p>
+<p>Returns the 3d coordinates and number of iterations required for each
+projection. For non-iterative algorithms, the number of iterations
+will be 0.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.localization.peak">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">peak</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.peak" title="Link to this definition">#</a></dt>
+<dd><p>Localize the catheter in the projection direction by finding the max
+signal.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.localization.png">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">png</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1e-06</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_iter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">32</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.png" title="Link to this definition">#</a></dt>
+<dd><p>‘Peak Normed Gaussian’ localizes the catheter in the projection
+direction by iteratively computing the ‘png’ weighted centroid.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.localization.png_density">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.localization.</span></span><span class="sig-name descname"><span class="pre">png_density</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sigma</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.localization.png_density" title="Link to this definition">#</a></dt>
+<dd><p>‘Peak Normed Gaussian’ is a function used for iterative catheter
+localization. It is 1 in the range [-width, width] before decaying as a
+gaussian.</p>
+</dd></dl>
+
+</section>
+<section id="module-catheter_utils.metrics">
+<span id="catheter-utils-metrics-module"></span><h2>catheter_utils.metrics module<a class="headerlink" href="#module-catheter_utils.metrics" title="Link to this heading">#</a></h2>
+<p>This module contains functions related to evaluating/comparing results.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.metrics.Bias">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.metrics.</span></span><span class="sig-name descname"><span class="pre">Bias</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distal_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Geometry</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.metrics.Bias" title="Link to this definition">#</a></dt>
+<dd><p>Return the mean bias between the ground truth and measurements.</p>
+<p>distal_file: text file of distal coordinates 
+proximal_file: text file of proximal coordinates
+gt_coords: ground truth tip coordinates 
+Geometry: the geometry of the coils</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.metrics.Chebyshev">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.metrics.</span></span><span class="sig-name descname"><span class="pre">Chebyshev</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distal_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Geometry</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.metrics.Chebyshev" title="Link to this definition">#</a></dt>
+<dd><p>produces the 95% chebyshev radius.</p>
+<p>distal_file: text file of distal coordinates 
+proximal_file: text file of proximal coordinates
+gt_coords: ground truth tip coordinates 
+Geometry: the geometry of the coils</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.metrics.barplot">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.metrics.</span></span><span class="sig-name descname"><span class="pre">barplot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_axis</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.metrics.barplot" title="Link to this definition">#</a></dt>
+<dd><p>plot bar graph of Bias and Chebyshev tracking error. x-axis: algorithm (Default), y-axis: Bias + Chebyshev. Rest of data columns are filters</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.metrics.get_bias_array">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.metrics.</span></span><span class="sig-name descname"><span class="pre">get_bias_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">distal_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gt_coords</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Geometry</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.metrics.get_bias_array" title="Link to this definition">#</a></dt>
+<dd><p>return the list of biases between the ground truth and measurements.</p>
+<p>distal_file: text file of distal coordinates 
+proximal_file: text file of proximal coordinates
+gt_coords: ground truth tip coordinates 
+Geometry: the geometry of the coils</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.metrics.get_coords">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.metrics.</span></span><span class="sig-name descname"><span class="pre">get_coords</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.metrics.get_coords" title="Link to this definition">#</a></dt>
+<dd><p>takes a path to a txt file and extracts coordinate data.</p>
+<p>data_file is the path to a .txt file that contains the 
+x,y,z coordinates</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.metrics.trackerr">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.metrics.</span></span><span class="sig-name descname"><span class="pre">trackerr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seq_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">groundtruth</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">algorithm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dest_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distal_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dither_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">expname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.metrics.trackerr" title="Link to this definition">#</a></dt>
+<dd><p>retrieve .txt files from localization algorithm folders, FOV from projection files, and groundtruth coordinates
+then calculate Bias and Chebyshev tracking error. Data exported as csv with expname (default is experiment name in GroundTruthCoords.csv)</p>
+</dd></dl>
+
+</section>
+<section id="module-catheter_utils.projections">
+<span id="catheter-utils-projections-module"></span><h2>catheter_utils.projections module<a class="headerlink" href="#module-catheter_utils.projections" title="Link to this heading">#</a></h2>
+<p>This module contains things related to reading and manipulating projections.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="catheter_utils.projections.FindData">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">FindData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">toc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">recording</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">distal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proximal</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dither</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.FindData" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Extract coil projection data and synchronized rows of distal &amp; proximal pairs</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.projections.FindData.combine_snr">
+<span class="sig-name descname"><span class="pre">combine_snr</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.FindData.combine_snr" title="Link to this definition">#</a></dt>
+<dd><p>Compute dict of snrs for this projection: the keys are the coils,
+and each value is an arrays of snrs, one for each set of axes over the recording,
+ordered by time</p>
+<p>This should not need to be called from outside the class: it is called
+internally when the projections are read and when the snr_combo_method is changed</p>
+<p>SNRS are combined over axes: 3 axes (X, Y, and Z) for the basic “SRI” 3-projection sequence
+and 4 axes (4 diagonals of a cube) for the “FH” hadmard-multiplexed sequence
+The snr_combo_method defines how the SNRs are combined.</p>
+<p>These snr combined values are stored in the snr property. They are computed when this
+method is called and saved until the snr_combo_method is changed</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.projections.FindData.get_distal_data">
+<span class="sig-name descname"><span class="pre">get_distal_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.FindData.get_distal_data" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.projections.FindData.get_proximal_data">
+<span class="sig-name descname"><span class="pre">get_proximal_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">i</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.FindData.get_proximal_data" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="catheter_utils.projections.FindData.get_timestamp">
+<span class="sig-name descname"><span class="pre">get_timestamp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axis</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">readout</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.FindData.get_timestamp" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="catheter_utils.projections.FindData.resp">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">resp</span></span><a class="headerlink" href="#catheter_utils.projections.FindData.resp" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="catheter_utils.projections.FindData.snr">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">snr</span></span><a class="headerlink" href="#catheter_utils.projections.FindData.snr" title="Link to this definition">#</a></dt>
+<dd><p>Return a dict of SNRs by coil
+- Each value is an arrays of snrs, one for each set of axes over the recording,
+ordered by time
+- Each SNR is a combination of the SNRs of each axis projection
+- see combine_snr &amp; snr_combo_method for details</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="catheter_utils.projections.FindData.snr_combo_method">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">snr_combo_method</span></span><a class="headerlink" href="#catheter_utils.projections.FindData.snr_combo_method" title="Link to this definition">#</a></dt>
+<dd><dl class="simple">
+<dt>The SNR combination method defines how SNRs are combined across axes</dt><dd><ul class="simple">
+<li><p>Should be one of: ‘min’, ‘median’, ‘mean’</p></li>
+<li><p>The default value on construction is ‘min’</p></li>
+</ul>
+</dd>
+</dl>
+<p>WARNING: on setting, it may take some time to compute the combined SNRs</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="catheter_utils.projections.FindData.snrs_per_readout">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">snrs_per_readout</span></span><a class="headerlink" href="#catheter_utils.projections.FindData.snrs_per_readout" title="Link to this definition">#</a></dt>
+<dd><p>Return SNRs from each readout
+Returns a dict whose keys are the coil &amp; axis (both ints) and each
+value is an array of SNRs for this recording, ordered by time</p>
+<p>Unlike the snr property, snrs_per_readout does not combine the SNR over axes</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="catheter_utils.projections.FindData.timestamp">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">timestamp</span></span><a class="headerlink" href="#catheter_utils.projections.FindData.timestamp" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="catheter_utils.projections.FindData.trig">
+<em class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">trig</span></span><a class="headerlink" href="#catheter_utils.projections.FindData.trig" title="Link to this definition">#</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="catheter_utils.projections.ProjectionFileCorrupted">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">ProjectionFileCorrupted</span></span><a class="headerlink" href="#catheter_utils.projections.ProjectionFileCorrupted" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<p>Raised to indicate that the file is ‘corrupt’.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="catheter_utils.projections.ProjectionFileVersionCheck">
+<em class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">ProjectionFileVersionCheck</span></span><a class="headerlink" href="#catheter_utils.projections.ProjectionFileVersionCheck" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></p>
+<p>Raised to indicate that the file failed its version check.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="catheter_utils.projections.ReadRawResult">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">ReadRawResult</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legacy_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corrupt</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.ReadRawResult" title="Link to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">tuple</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.projections.ReadRawResult.corrupt">
+<span class="sig-name descname"><span class="pre">corrupt</span></span><a class="headerlink" href="#catheter_utils.projections.ReadRawResult.corrupt" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 3</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.projections.ReadRawResult.legacy_version">
+<span class="sig-name descname"><span class="pre">legacy_version</span></span><a class="headerlink" href="#catheter_utils.projections.ReadRawResult.legacy_version" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 2</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.projections.ReadRawResult.meta">
+<span class="sig-name descname"><span class="pre">meta</span></span><a class="headerlink" href="#catheter_utils.projections.ReadRawResult.meta" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="catheter_utils.projections.ReadRawResult.raw">
+<span class="sig-name descname"><span class="pre">raw</span></span><a class="headerlink" href="#catheter_utils.projections.ReadRawResult.raw" title="Link to this definition">#</a></dt>
+<dd><p>Alias for field number 1</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.projections.discover_raw">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">discover_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.discover_raw" title="Link to this definition">#</a></dt>
+<dd><p>Check for possible projections files in the given directory, and
+summarize their contents.</p>
+<p>Returns (discoveries, unknown) where:
+<cite>discoveries</cite> is a pandas.DataFrame where rows describe individual</p>
+<blockquote>
+<div><dl class="simple">
+<dt>projections and columns are given by:</dt><dd><p>scheme: str     # how projections are related,
+recording: int  # the recording number,
+coil: int       # the coil that the projection was acquired on,
+axis: int       # the axis of the projection,
+dither: int     # the dither index (0 for sri),
+filename: str   # the file that the projection is in,
+index: int      # the index of the projection in the file</p>
+</dd>
+<dt>If <cite>validate</cite> is set to True then there will be additional columns:</dt><dd><p>corrupt: bool   # is the file corrupt
+expected: bool  # projections in the file agree with expectation
+version: int    # the inferred file version</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="simple">
+<dt><cite>unknown</cite> is a list of “.projections” filenames that do not follow our</dt><dd><p>file naming conventions. What do they contain? Ask somebody else.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.projections.fov_info">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">fov_info</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">meta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.fov_info" title="Link to this definition">#</a></dt>
+<dd><p>extract FOV info from pandas.Dataframe (meta), and raw numpy data (raw). Output from read_raw function</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.projections.guess_contents_raw">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">guess_contents_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.guess_contents_raw" title="Link to this definition">#</a></dt>
+<dd><p>Guess the projection content of a raw projections file with the given
+filename. The guess is based on convention.</p>
+<p>Returns a list of dicts providing info about what each projection is.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.projections.read_raw">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">read_raw</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">legacy_version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_corrupt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.read_raw" title="Link to this definition">#</a></dt>
+<dd><p>Read the raw projection data from the requested file.</p>
+<p>If <cite>legacy_version</cite> is None then this will try to infer the correct version.
+Otherwise it will read the file using the requested version number.</p>
+<p>If <cite>allow_corrupt</cite> is True then this won’t raise an exception when
+encountering an apparently corrupt file, and will instead log a
+warning and return as much data as could be read.</p>
+<dl class="simple">
+<dt>Returns ReadRawResult(meta, raw, version, corrupt) where:</dt><dd><p>‘meta’ is a pandas.DataFrame containing information about each sample;
+‘raw’ is a list of 2D complex valued numpy arrays with readouts in rows;
+‘version’ is the inferred or requested legacy_version; and
+‘corrupt’ indicates an apparently corrupt file.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.projections.reconstruct">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">reconstruct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.reconstruct" title="Link to this definition">#</a></dt>
+<dd><p>Reconstruct the raw signals into ‘projections’.
+These are 1D magnitude images.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.projections.reconstruct_complex">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">reconstruct_complex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">raw</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.reconstruct_complex" title="Link to this definition">#</a></dt>
+<dd><p>Reconstruct the raw signals into ‘complex projections’.
+These are the (inverse) FT of the raw signals.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.projections.snr">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">snr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.snr" title="Link to this definition">#</a></dt>
+<dd><p>Estimate the given signal’s SNR.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="catheter_utils.projections.variance">
+<span class="sig-prename descclassname"><span class="pre">catheter_utils.projections.</span></span><span class="sig-name descname"><span class="pre">variance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#catheter_utils.projections.variance" title="Link to this definition">#</a></dt>
+<dd><p>Estimate the given signal’s variance.</p>
+<p>Treat fs as though it is proportional to a probability density, and
+calculate its variance.</p>
+</dd></dl>
+
+</section>
+<section id="module-catheter_utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-catheter_utils" title="Link to this heading">#</a></h2>
+<p>Home to catheter utils.</p>
+</section>
+</section>
+
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="modules.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">catheter_utils</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils.cathcoords">catheter_utils.cathcoords module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords"><code class="docutils literal notranslate"><span class="pre">Cathcoords</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords.coords"><code class="docutils literal notranslate"><span class="pre">Cathcoords.coords</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords.resps"><code class="docutils literal notranslate"><span class="pre">Cathcoords.resps</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords.snr"><code class="docutils literal notranslate"><span class="pre">Cathcoords.snr</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords.times"><code class="docutils literal notranslate"><span class="pre">Cathcoords.times</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.Cathcoords.trigs"><code class="docutils literal notranslate"><span class="pre">Cathcoords.trigs</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.discover_files"><code class="docutils literal notranslate"><span class="pre">discover_files()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.get_centroid_mean"><code class="docutils literal notranslate"><span class="pre">get_centroid_mean()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.get_centroid_median"><code class="docutils literal notranslate"><span class="pre">get_centroid_median()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.get_distances_from_centroid"><code class="docutils literal notranslate"><span class="pre">get_distances_from_centroid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.get_tip_variance"><code class="docutils literal notranslate"><span class="pre">get_tip_variance()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.make_filename"><code class="docutils literal notranslate"><span class="pre">make_filename()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.read_file"><code class="docutils literal notranslate"><span class="pre">read_file()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.read_pair"><code class="docutils literal notranslate"><span class="pre">read_pair()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.cathcoords.write_file"><code class="docutils literal notranslate"><span class="pre">write_file()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils.geometry">catheter_utils.geometry module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.GEOMETRY"><code class="docutils literal notranslate"><span class="pre">GEOMETRY</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry"><code class="docutils literal notranslate"><span class="pre">Geometry</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult"><code class="docutils literal notranslate"><span class="pre">Geometry.FitFromCoilsResult</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult.distal"><code class="docutils literal notranslate"><span class="pre">Geometry.FitFromCoilsResult.distal</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult.proximal"><code class="docutils literal notranslate"><span class="pre">Geometry.FitFromCoilsResult.proximal</span></code></a></li>
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.FitFromCoilsResult.tip"><code class="docutils literal notranslate"><span class="pre">Geometry.FitFromCoilsResult.tip</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.distal_to_midpoint"><code class="docutils literal notranslate"><span class="pre">Geometry.distal_to_midpoint</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.distal_to_proximal"><code class="docutils literal notranslate"><span class="pre">Geometry.distal_to_proximal</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.fit_from_coils_distal_offset"><code class="docutils literal notranslate"><span class="pre">Geometry.fit_from_coils_distal_offset()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.fit_from_coils_mse"><code class="docutils literal notranslate"><span class="pre">Geometry.fit_from_coils_mse()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.Geometry.tip_to_midpoint"><code class="docutils literal notranslate"><span class="pre">Geometry.tip_to_midpoint</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.geometry.estimate_geometry"><code class="docutils literal notranslate"><span class="pre">estimate_geometry()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils.localization">catheter_utils.localization module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.HadamardCoordinates"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.HadamardCoordinates.projection_to_world"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates.projection_to_world()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.HadamardCoordinates.world_to_projection"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates.world_to_projection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.HadamardCoordinates.world_to_projection_mat"><code class="docutils literal notranslate"><span class="pre">HadamardCoordinates.world_to_projection_mat()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.JointIterativeWeightedCentroid"><code class="docutils literal notranslate"><span class="pre">JointIterativeWeightedCentroid</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.JointIterativeWeightedCentroid.localize"><code class="docutils literal notranslate"><span class="pre">JointIterativeWeightedCentroid.localize()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.ProjectionWeightedCatheterFit"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.fit"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.fit()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.fun"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.fun()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.init"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.init</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.ProjectionWeightedCatheterFit.solve"><code class="docutils literal notranslate"><span class="pre">ProjectionWeightedCatheterFit.solve()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.XYZCoordinates"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.XYZCoordinates.projection_to_world"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates.projection_to_world()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.XYZCoordinates.world_to_projection"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates.world_to_projection()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.XYZCoordinates.world_to_projection_mat"><code class="docutils literal notranslate"><span class="pre">XYZCoordinates.world_to_projection_mat()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.centroid"><code class="docutils literal notranslate"><span class="pre">centroid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.centroid_around_peak"><code class="docutils literal notranslate"><span class="pre">centroid_around_peak()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.iterative_weighted_centroid"><code class="docutils literal notranslate"><span class="pre">iterative_weighted_centroid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.joint_iterative_weighted_centroid"><code class="docutils literal notranslate"><span class="pre">joint_iterative_weighted_centroid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.jpng"><code class="docutils literal notranslate"><span class="pre">jpng()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.localize_catheter"><code class="docutils literal notranslate"><span class="pre">localize_catheter()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.localize_coil"><code class="docutils literal notranslate"><span class="pre">localize_coil()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.peak"><code class="docutils literal notranslate"><span class="pre">peak()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.png"><code class="docutils literal notranslate"><span class="pre">png()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.localization.png_density"><code class="docutils literal notranslate"><span class="pre">png_density()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils.metrics">catheter_utils.metrics module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.Bias"><code class="docutils literal notranslate"><span class="pre">Bias()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.Chebyshev"><code class="docutils literal notranslate"><span class="pre">Chebyshev()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.barplot"><code class="docutils literal notranslate"><span class="pre">barplot()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.get_bias_array"><code class="docutils literal notranslate"><span class="pre">get_bias_array()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.get_coords"><code class="docutils literal notranslate"><span class="pre">get_coords()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.metrics.trackerr"><code class="docutils literal notranslate"><span class="pre">trackerr()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils.projections">catheter_utils.projections module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData"><code class="docutils literal notranslate"><span class="pre">FindData</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.combine_snr"><code class="docutils literal notranslate"><span class="pre">FindData.combine_snr()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.get_distal_data"><code class="docutils literal notranslate"><span class="pre">FindData.get_distal_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.get_proximal_data"><code class="docutils literal notranslate"><span class="pre">FindData.get_proximal_data()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.get_timestamp"><code class="docutils literal notranslate"><span class="pre">FindData.get_timestamp()</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.resp"><code class="docutils literal notranslate"><span class="pre">FindData.resp</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.snr"><code class="docutils literal notranslate"><span class="pre">FindData.snr</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.snr_combo_method"><code class="docutils literal notranslate"><span class="pre">FindData.snr_combo_method</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.snrs_per_readout"><code class="docutils literal notranslate"><span class="pre">FindData.snrs_per_readout</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.timestamp"><code class="docutils literal notranslate"><span class="pre">FindData.timestamp</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.FindData.trig"><code class="docutils literal notranslate"><span class="pre">FindData.trig</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ProjectionFileCorrupted"><code class="docutils literal notranslate"><span class="pre">ProjectionFileCorrupted</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ProjectionFileVersionCheck"><code class="docutils literal notranslate"><span class="pre">ProjectionFileVersionCheck</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ReadRawResult"><code class="docutils literal notranslate"><span class="pre">ReadRawResult</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ReadRawResult.corrupt"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.corrupt</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ReadRawResult.legacy_version"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.legacy_version</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ReadRawResult.meta"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.meta</span></code></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.ReadRawResult.raw"><code class="docutils literal notranslate"><span class="pre">ReadRawResult.raw</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.discover_raw"><code class="docutils literal notranslate"><span class="pre">discover_raw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.fov_info"><code class="docutils literal notranslate"><span class="pre">fov_info()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.guess_contents_raw"><code class="docutils literal notranslate"><span class="pre">guess_contents_raw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.read_raw"><code class="docutils literal notranslate"><span class="pre">read_raw()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.reconstruct"><code class="docutils literal notranslate"><span class="pre">reconstruct()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.reconstruct_complex"><code class="docutils literal notranslate"><span class="pre">reconstruct_complex()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.snr"><code class="docutils literal notranslate"><span class="pre">snr()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#catheter_utils.projections.variance"><code class="docutils literal notranslate"><span class="pre">variance()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-catheter_utils">Module contents</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Sunnybrook Research Institute
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2025, Sunnybrook Research Institute.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=dfe6caa3a7d634c4db9b"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=dfe6caa3a7d634c4db9b"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
