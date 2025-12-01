@@ -54,7 +54,7 @@ def Chebyshev(distal_file, proximal_file, gt_coords, Geometry):
 
 
 def Bias(distal_file, proximal_file, gt_coords, Geometry): 
-    '''produces the bias between the ground truth and measurements.
+    '''Return the mean bias between the ground truth and measurements.
 	
 	   distal_file: text file of distal coordinates 
 	   proximal_file: text file of proximal coordinates
@@ -72,6 +72,25 @@ def Bias(distal_file, proximal_file, gt_coords, Geometry):
     bias = np.linalg.norm(bias_vect)
     
     return bias
+
+def get_bias_array(distal_file, proximal_file, gt_coords, Geometry): 
+    '''return the list of biases between the ground truth and measurements.
+	
+	   distal_file: text file of distal coordinates 
+	   proximal_file: text file of proximal coordinates
+	   gt_coords: ground truth tip coordinates 
+	   Geometry: the geometry of the coils 
+	'''
+	
+    distal_coords = get_coords(distal_file)
+    proximal_coords = get_coords(proximal_file)
+    
+    fit_results = Geometry.fit_from_coils_mse(distal_coords, proximal_coords)
+    
+    bias_vect = np.array(fit_results.tip) - np.array(gt_coords)
+    bias_vect = np.linalg.norm(bias_vect,axis=1)
+    
+    return bias_vect
 
 def trackerr(seq_path, src_path, groundtruth, algorithm, dest_path, distal_index, proximal_index, dither_index, expname):
     '''
