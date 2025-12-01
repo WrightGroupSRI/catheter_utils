@@ -176,4 +176,4 @@ def get_tip_variance(distal_file, proximal_file, geometry=None, dof=1):
         geometry = catheter_utils.geometry.estimate_geometry(distal_coords,proximal_coords)
     fit_results = geometry.fit_from_coils_mse(distal_coords, proximal_coords)
     distances,_ = get_distances_from_centroid(fit_results.tip)
-    return numpy.var(distances, ddof=1)
+    return numpy.var(distances, ddof=dof)
