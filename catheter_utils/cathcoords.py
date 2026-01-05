@@ -155,7 +155,7 @@ def get_distances_from_centroid(coords, use_mean=True):
     diffs = coords - centroid
     return numpy.linalg.norm(diffs,axis=1),centroid
 
-def get_tip_variance(distal_file, proximal_file, geometry=None, dof=1):
+def get_tip_variance(distal_file, proximal_file, geometry=None, dof=1, max_samples=-1):
     '''returns the variance of the tip coordinates
 
     From distal and proximal coordinate files: computes
@@ -169,9 +169,15 @@ def get_tip_variance(distal_file, proximal_file, geometry=None, dof=1):
 	proximal_file: text file of proximal coordinates
 	geometry: the geometry of the coils, estimated if not passed in
     dof: degrees of freedom for variance calculation, 1 by default
+    max_samples: optional, maximum number of coordinates to consider
+    - the first "max_samples" distal and proximal coordinates will be considered if
+        max_samples > 0 and max_samples < coordinate array length
     '''
     distal_coords = read_file(distal_file).coords
     proximal_coords = read_file(proximal_file).coords
+    if ( max_samples > 0 and max_samples < min(len(distal_coords),len(proximal_coords)) ):
+        distal_coords = distal_coords[:max_samples]
+        proximal_coords = proximal_coords[:max_samples]
     if (geometry is None):
         geometry = catheter_utils.geometry.estimate_geometry(distal_coords,proximal_coords)
     fit_results = geometry.fit_from_coils_mse(distal_coords, proximal_coords)

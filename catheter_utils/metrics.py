@@ -53,17 +53,23 @@ def Chebyshev(distal_file, proximal_file, gt_coords, Geometry):
     return sigma * 2 * np.sqrt(5/3) 
 
 
-def Bias(distal_file, proximal_file, gt_coords, Geometry): 
+def Bias(distal_file, proximal_file, gt_coords, Geometry, max_samples=-1): 
     '''Return the mean bias between the ground truth and measurements.
 	
 	   distal_file: text file of distal coordinates 
 	   proximal_file: text file of proximal coordinates
 	   gt_coords: ground truth tip coordinates 
-	   Geometry: the geometry of the coils 
+	   Geometry: the geometry of the coils
+       max_samples: optional, maximum number of coordinates to consider
+        - the first max_samples distal and proximal coordinates will be considered if
+          max_samples > 0 and max_samples < coordinate array length
 	'''
 	
     distal_coords = get_coords(distal_file)
     proximal_coords = get_coords(proximal_file)
+    if ( max_samples > 0 and max_samples < min(len(distal_coords),len(proximal_coords)) ):
+        distal_coords = distal_coords[:max_samples]
+        proximal_coords = proximal_coords[:max_samples]
     
     fit_results = Geometry.fit_from_coils_mse(distal_coords, proximal_coords)
     mean_tip = np.mean(fit_results.tip, axis=0)
@@ -89,6 +95,7 @@ def get_bias_array(distal_file, proximal_file, gt_coords, Geometry):
     
     bias_vect = np.array(fit_results.tip) - np.array(gt_coords)
     bias_vect = np.linalg.norm(bias_vect,axis=1)
+    bias_vect = np.nan_to_num(bias_vect, nan=0.0)
     
     return bias_vect
 
